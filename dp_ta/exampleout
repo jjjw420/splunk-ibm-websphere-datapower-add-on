@@ -1,0 +1,966 @@
+
+wsm pull sub resp:
+
+<env:Envelope xmlns:wsman="http://schemas.xmlsoap.org/ws/2005/02/management" xmlns:wse="http://schemas.xmlsoap.org/ws/2004/08/eventing" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+   <env:Header xmlns:wsen="http://schemas.xmlsoap.org/ws/2004/09/enumeration">
+      <wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To>
+      <wsa:Action>http://schemas.xmlsoap.org/ws/2004/08/eventing/SubscribeResponse</wsa:Action>
+      <wsa:RelatesTo>xsltmark:sub-req-001</wsa:RelatesTo>
+   </env:Header>
+   <env:Body xmlns:wsen="http://schemas.xmlsoap.org/ws/2004/09/enumeration">
+      <wse:SubscribeResponse>
+         <wse:SubscriptionManager>
+            <wsa:Address>/wsman?ResourceURI=(wsman:datapower.com/resources/2005/07/ws-gateway)</wsa:Address>
+            <wsa:ReferenceProperties>
+               <dpt:Domain xmlns:dpt="http://www.datapower.com/schemas/transactions">TestSplunk</dpt:Domain>
+               <wse:Identifier>uuid:95c53310-370e-4865-b81b-d9718dd1069e</wse:Identifier>
+            </wsa:ReferenceProperties>
+         </wse:SubscriptionManager>
+         <wse:Expires>PT5M</wse:Expires>
+         <wsen:EnumerationContext>uuid:95c53310-370e-4865-b81b-d9718dd1069e</wsen:EnumerationContext>
+      </wse:SubscribeResponse>
+   </env:Body>
+</env:Envelope>
+
+wsm pull req:
+<env:Envelope xmlns:wsman="http://schemas.xmlsoap.org/ws/2005/02/management" xmlns:wsen="http://schemas.xmlsoap.org/ws/2004/09/enumeration" xmlns:wse="http://schemas.xmlsoap.org/ws/2004/08/eventing" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+   <env:Header>
+      <wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To>
+      <wsa:Action>http://schemas.xmlsoap.org/ws/2004/09/enumeration/PullResponse</wsa:Action>
+      <wsa:RelatesTo>xsltmark:ev-pull-req</wsa:RelatesTo>
+   </env:Header>
+   <env:Body>
+      <wsen:PullResponse>
+         <wsen:EnumerationContext>uuid:95c53310-370e-4865-b81b-d9718dd1069e</wsen:EnumerationContext>
+         <wsen:Items>
+            <transaction tid="209665" xmlns="http://www.datapower.com/schemas/transactions">
+               <transaction-id>209665</transaction-id>
+               <is-one-way>0</is-one-way>
+               <request-url>http://192.168.0.109:8081/business/test/hello/world</request-url>
+               <final-url>http://192.168.0.109:8081/business/test/hello/world</final-url>
+               <webservice>{http://schemas.xmlsoap.org/soap/envelope/}MS_PS_ESB_HelloWorldSOAP_HTTP_Service</webservice>
+               <service-port>{http://schemas.xmlsoap.org/soap/envelope/}SOAP_HTTP_Port</service-port>
+               <ws-operation>{http://schemas.xmlsoap.org/soap/envelope/}getHelloWorld</ws-operation>
+               <ws-client-id/>
+               <ws-clientid-extmthd/>
+               <ws-correlator-version>02</ws-correlator-version>
+               <ws-correlator-sfid/>
+               <ws-client-socode/>
+               <ws-dp-socode/>
+               <ws-server-socode/>
+               <ws-client-hopcount>0</ws-client-hopcount>
+               <ws-server-hopcount>0</ws-server-hopcount>
+               <client>192.168.0.87</client>
+               <username/>
+               <credential/>
+               <start-time utc="1471321379">Tue Aug 16 07:22:59 2016</start-time>
+               <duration-ms>0</duration-ms>
+               <front-latency-ms>0</front-latency-ms>
+               <back-latency-ms>0</back-latency-ms>
+               <request-size>395</request-size>
+               <response-size>0</response-size>
+               <request-message>
+                  <soapenv:Envelope xmlns="" xmlns:urn="urn:standardbank.co.za:services:Business:Test:TestService" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                     <soapenv:Header/>
+                     <soapenv:Body>
+                        <urn:helloWorld>
+                           <inLevel>
+                              <Hello>2</Hello>
+                              <World>2</World>
+                              <Echo>2</Echo>
+                           </inLevel>
+                        </urn:helloWorld>
+                     </soapenv:Body>
+                  </soapenv:Envelope>
+               </request-message>
+               <backend-message>
+                  <backend-host>192.168.0.87</backend-host>
+                  <backend-url>http://192.168.0.87:8080/business/test/hello/world</backend-url>
+                  <request-size>434</request-size>
+                  <response-size>0</response-size>
+                  <request-message>
+                     <soapenv:Envelope xmlns="" xmlns:urn="urn:standardbank.co.za:services:Business:Test:TestService" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                        <soapenv:Header/>
+                        <soapenv:Body>
+                           <urn:helloWorld>
+                              <inLevel>
+                                 <Hello>2</Hello>
+                                 <World>2</World>
+                                 <Echo>2</Echo>
+                              </inLevel>
+                           </urn:helloWorld>
+                        </soapenv:Body>
+                     </soapenv:Envelope>
+                  </request-message>
+               </backend-message>
+               <fault-code>0x01130006</fault-code>
+               <fault-message>Failed to establish a backside connection</fault-message>
+            </transaction>
+            <transaction tid="209697" xmlns="http://www.datapower.com/schemas/transactions">
+               <transaction-id>209697</transaction-id>
+               <is-one-way>0</is-one-way>
+               <request-url>http://192.168.0.109:8081/business/test/hello/world</request-url>
+               <final-url>http://192.168.0.109:8081/business/test/hello/world</final-url>
+               <webservice>{http://schemas.xmlsoap.org/soap/envelope/}MS_PS_ESB_HelloWorldSOAP_HTTP_Service</webservice>
+               <service-port>{http://schemas.xmlsoap.org/soap/envelope/}SOAP_HTTP_Port</service-port>
+               <ws-operation>{http://schemas.xmlsoap.org/soap/envelope/}getHelloWorld</ws-operation>
+               <ws-client-id/>
+               <ws-clientid-extmthd/>
+               <ws-correlator-version>02</ws-correlator-version>
+               <ws-correlator-sfid/>
+               <ws-client-socode/>
+               <ws-dp-socode/>
+               <ws-server-socode/>
+               <ws-client-hopcount>0</ws-client-hopcount>
+               <ws-server-hopcount>0</ws-server-hopcount>
+               <client>192.168.0.87</client>
+               <username/>
+               <credential/>
+               <start-time utc="1471321380">Tue Aug 16 07:23:00 2016</start-time>
+               <duration-ms>0</duration-ms>
+               <front-latency-ms>0</front-latency-ms>
+               <back-latency-ms>0</back-latency-ms>
+               <request-size>395</request-size>
+               <response-size>0</response-size>
+               <request-message>
+                  <soapenv:Envelope xmlns="" xmlns:urn="urn:standardbank.co.za:services:Business:Test:TestService" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                     <soapenv:Header/>
+                     <soapenv:Body>
+                        <urn:helloWorld>
+                           <inLevel>
+                              <Hello>2</Hello>
+                              <World>2</World>
+                              <Echo>2</Echo>
+                           </inLevel>
+                        </urn:helloWorld>
+                     </soapenv:Body>
+                  </soapenv:Envelope>
+               </request-message>
+               <backend-message>
+                  <backend-host>192.168.0.87</backend-host>
+                  <backend-url>http://192.168.0.87:8080/business/test/hello/world</backend-url>
+                  <request-size>434</request-size>
+                  <response-size>0</response-size>
+                  <request-message>
+                     <soapenv:Envelope xmlns="" xmlns:urn="urn:standardbank.co.za:services:Business:Test:TestService" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                        <soapenv:Header/>
+                        <soapenv:Body>
+                           <urn:helloWorld>
+                              <inLevel>
+                                 <Hello>2</Hello>
+                                 <World>2</World>
+                                 <Echo>2</Echo>
+                              </inLevel>
+                           </urn:helloWorld>
+                        </soapenv:Body>
+                     </soapenv:Envelope>
+                  </request-message>
+               </backend-message>
+               <fault-code>0x01130006</fault-code>
+               <fault-message>Failed to establish a backside connection</fault-message>
+            </transaction>
+            <transaction tid="248240" xmlns="http://www.datapower.com/schemas/transactions">
+               <transaction-id>248240</transaction-id>
+               <is-one-way>0</is-one-way>
+               <request-url>http://192.168.0.109:8081/business/test/hello/world</request-url>
+               <final-url>http://192.168.0.109:8081/business/test/hello/world</final-url>
+               <webservice>{http://schemas.xmlsoap.org/soap/envelope/}MS_PS_ESB_HelloWorldSOAP_HTTP_Service</webservice>
+               <service-port>{http://schemas.xmlsoap.org/soap/envelope/}SOAP_HTTP_Port</service-port>
+               <ws-operation>{http://schemas.xmlsoap.org/soap/envelope/}getHelloWorld</ws-operation>
+               <ws-client-id/>
+               <ws-clientid-extmthd/>
+               <ws-correlator-version>02</ws-correlator-version>
+               <ws-correlator-sfid/>
+               <ws-client-socode/>
+               <ws-dp-socode/>
+               <ws-server-socode/>
+               <ws-client-hopcount>0</ws-client-hopcount>
+               <ws-server-hopcount>0</ws-server-hopcount>
+               <client>192.168.0.87</client>
+               <username/>
+               <credential/>
+               <start-time utc="1471321381">Tue Aug 16 07:23:01 2016</start-time>
+               <duration-ms>0</duration-ms>
+               <front-latency-ms>0</front-latency-ms>
+               <back-latency-ms>0</back-latency-ms>
+               <request-size>395</request-size>
+               <response-size>0</response-size>
+               <request-message>
+                  <soapenv:Envelope xmlns="" xmlns:urn="urn:standardbank.co.za:services:Business:Test:TestService" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                     <soapenv:Header/>
+                     <soapenv:Body>
+                        <urn:helloWorld>
+                           <inLevel>
+                              <Hello>2</Hello>
+                              <World>2</World>
+                              <Echo>2</Echo>
+                           </inLevel>
+                        </urn:helloWorld>
+                     </soapenv:Body>
+                  </soapenv:Envelope>
+               </request-message>
+               <backend-message>
+                  <backend-host>192.168.0.87</backend-host>
+                  <backend-url>http://192.168.0.87:8080/business/test/hello/world</backend-url>
+                  <request-size>434</request-size>
+                  <response-size>0</response-size>
+                  <request-message>
+                     <soapenv:Envelope xmlns="" xmlns:urn="urn:standardbank.co.za:services:Business:Test:TestService" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                        <soapenv:Header/>
+                        <soapenv:Body>
+                           <urn:helloWorld>
+                              <inLevel>
+                                 <Hello>2</Hello>
+                                 <World>2</World>
+                                 <Echo>2</Echo>
+                              </inLevel>
+                           </urn:helloWorld>
+                        </soapenv:Body>
+                     </soapenv:Envelope>
+                  </request-message>
+               </backend-message>
+               <fault-code>0x01130006</fault-code>
+               <fault-message>Failed to establish a backside connection</fault-message>
+            </transaction>
+         </wsen:Items>
+      </wsen:PullResponse>
+   </env:Body>
+</env:Envelope>
+
+
+
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+   <env:Body>
+      <dp:response xmlns:dp="http://www.datapower.com/schemas/management">
+         <dp:timestamp>2016-08-16T15:41:38+02:00</dp:timestamp>
+         <dp:status>
+            <EthernetCountersStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <InterfaceIndex>4</InterfaceIndex>
+               <Name>mgt0</Name>
+               <InUnicastPackets/>
+               <InMulticastPackets>135</InMulticastPackets>
+               <InBroadcastPackets>7139834</InBroadcastPackets>
+               <OutUnicastPackets/>
+               <OutMulticastPackets>3</OutMulticastPackets>
+               <OutBroadcastPackets>0</OutBroadcastPackets>
+               <InOctets>562488919</InOctets>
+               <OutOctets>21454</OutOctets>
+               <InErrors>0</InErrors>
+               <OutErrors>0</OutErrors>
+               <OutDiscards>0</OutDiscards>
+               <AlignmentErrors>0</AlignmentErrors>
+               <FCSErrors>0</FCSErrors>
+               <SingleCollisionFrames>0</SingleCollisionFrames>
+               <MultipleCollisionFrames>0</MultipleCollisionFrames>
+               <SQETestErrors>0</SQETestErrors>
+               <DeferredTransmissions>0</DeferredTransmissions>
+               <LateCollisions>0</LateCollisions>
+               <ExcessiveCollisions>0</ExcessiveCollisions>
+               <InternalMacTransmitErrors/>
+               <CarrierSenseErrors>0</CarrierSenseErrors>
+               <FrameTooShorts>0</FrameTooShorts>
+               <FrameTooLongs>0</FrameTooLongs>
+               <InternalMacReceiveErrors>0</InternalMacReceiveErrors>
+               <InPauseFrames>0</InPauseFrames>
+               <OutPauseFrames>0</OutPauseFrames>
+            </EthernetCountersStatus>
+            <EthernetCountersStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <InterfaceIndex>5</InterfaceIndex>
+               <Name>mgt1</Name>
+               <InUnicastPackets/>
+               <InMulticastPackets>0</InMulticastPackets>
+               <InBroadcastPackets>10</InBroadcastPackets>
+               <OutUnicastPackets/>
+               <OutMulticastPackets>3</OutMulticastPackets>
+               <OutBroadcastPackets>0</OutBroadcastPackets>
+               <InOctets>640</InOctets>
+               <OutOctets>270</OutOctets>
+               <InErrors>0</InErrors>
+               <OutErrors>0</OutErrors>
+               <OutDiscards>0</OutDiscards>
+               <AlignmentErrors>0</AlignmentErrors>
+               <FCSErrors>0</FCSErrors>
+               <SingleCollisionFrames>0</SingleCollisionFrames>
+               <MultipleCollisionFrames>0</MultipleCollisionFrames>
+               <SQETestErrors>0</SQETestErrors>
+               <DeferredTransmissions>0</DeferredTransmissions>
+               <LateCollisions>0</LateCollisions>
+               <ExcessiveCollisions>0</ExcessiveCollisions>
+               <InternalMacTransmitErrors/>
+               <CarrierSenseErrors>0</CarrierSenseErrors>
+               <FrameTooShorts>0</FrameTooShorts>
+               <FrameTooLongs>0</FrameTooLongs>
+               <InternalMacReceiveErrors>0</InternalMacReceiveErrors>
+               <InPauseFrames>0</InPauseFrames>
+               <OutPauseFrames>0</OutPauseFrames>
+            </EthernetCountersStatus>
+            <EthernetCountersStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <InterfaceIndex>6</InterfaceIndex>
+               <Name>eth10</Name>
+               <InUnicastPackets/>
+               <InMulticastPackets>747</InMulticastPackets>
+               <InBroadcastPackets>130436518</InBroadcastPackets>
+               <OutUnicastPackets/>
+               <OutMulticastPackets>2</OutMulticastPackets>
+               <OutBroadcastPackets>166</OutBroadcastPackets>
+               <InOctets>10010241710</InOctets>
+               <OutOctets>293034630</OutOctets>
+               <InErrors>0</InErrors>
+               <OutErrors>0</OutErrors>
+               <OutDiscards>0</OutDiscards>
+               <AlignmentErrors>0</AlignmentErrors>
+               <FCSErrors>0</FCSErrors>
+               <SingleCollisionFrames>0</SingleCollisionFrames>
+               <MultipleCollisionFrames>0</MultipleCollisionFrames>
+               <SQETestErrors>0</SQETestErrors>
+               <DeferredTransmissions>0</DeferredTransmissions>
+               <LateCollisions>0</LateCollisions>
+               <ExcessiveCollisions>0</ExcessiveCollisions>
+               <InternalMacTransmitErrors/>
+               <CarrierSenseErrors>0</CarrierSenseErrors>
+               <FrameTooShorts>0</FrameTooShorts>
+               <FrameTooLongs>0</FrameTooLongs>
+               <InternalMacReceiveErrors>0</InternalMacReceiveErrors>
+               <InPauseFrames>0</InPauseFrames>
+               <OutPauseFrames>0</OutPauseFrames>
+            </EthernetCountersStatus>
+            <EthernetCountersStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <InterfaceIndex>7</InterfaceIndex>
+               <Name>eth11</Name>
+               <InUnicastPackets/>
+               <InMulticastPackets>0</InMulticastPackets>
+               <InBroadcastPackets>0</InBroadcastPackets>
+               <OutUnicastPackets/>
+               <OutMulticastPackets>0</OutMulticastPackets>
+               <OutBroadcastPackets>0</OutBroadcastPackets>
+               <InOctets>0</InOctets>
+               <OutOctets>0</OutOctets>
+               <InErrors>0</InErrors>
+               <OutErrors>0</OutErrors>
+               <OutDiscards>0</OutDiscards>
+               <AlignmentErrors>0</AlignmentErrors>
+               <FCSErrors>0</FCSErrors>
+               <SingleCollisionFrames>0</SingleCollisionFrames>
+               <MultipleCollisionFrames>0</MultipleCollisionFrames>
+               <SQETestErrors>0</SQETestErrors>
+               <DeferredTransmissions>0</DeferredTransmissions>
+               <LateCollisions>0</LateCollisions>
+               <ExcessiveCollisions>0</ExcessiveCollisions>
+               <InternalMacTransmitErrors/>
+               <CarrierSenseErrors>0</CarrierSenseErrors>
+               <FrameTooShorts>0</FrameTooShorts>
+               <FrameTooLongs>0</FrameTooLongs>
+               <InternalMacReceiveErrors>0</InternalMacReceiveErrors>
+               <InPauseFrames>0</InPauseFrames>
+               <OutPauseFrames>0</OutPauseFrames>
+            </EthernetCountersStatus>
+            <EthernetCountersStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <InterfaceIndex>8</InterfaceIndex>
+               <Name>eth12</Name>
+               <InUnicastPackets/>
+               <InMulticastPackets>0</InMulticastPackets>
+               <InBroadcastPackets>0</InBroadcastPackets>
+               <OutUnicastPackets/>
+               <OutMulticastPackets>0</OutMulticastPackets>
+               <OutBroadcastPackets>0</OutBroadcastPackets>
+               <InOctets>0</InOctets>
+               <OutOctets>0</OutOctets>
+               <InErrors>0</InErrors>
+               <OutErrors>0</OutErrors>
+               <OutDiscards>0</OutDiscards>
+               <AlignmentErrors>0</AlignmentErrors>
+               <FCSErrors>0</FCSErrors>
+               <SingleCollisionFrames>0</SingleCollisionFrames>
+               <MultipleCollisionFrames>0</MultipleCollisionFrames>
+               <SQETestErrors>0</SQETestErrors>
+               <DeferredTransmissions>0</DeferredTransmissions>
+               <LateCollisions>0</LateCollisions>
+               <ExcessiveCollisions>0</ExcessiveCollisions>
+               <InternalMacTransmitErrors/>
+               <CarrierSenseErrors>0</CarrierSenseErrors>
+               <FrameTooShorts>0</FrameTooShorts>
+               <FrameTooLongs>0</FrameTooLongs>
+               <InternalMacReceiveErrors>0</InternalMacReceiveErrors>
+               <InPauseFrames>0</InPauseFrames>
+               <OutPauseFrames>0</OutPauseFrames>
+            </EthernetCountersStatus>
+            <EthernetCountersStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <InterfaceIndex>9</InterfaceIndex>
+               <Name>eth13</Name>
+               <InUnicastPackets/>
+               <InMulticastPackets>0</InMulticastPackets>
+               <InBroadcastPackets>0</InBroadcastPackets>
+               <OutUnicastPackets/>
+               <OutMulticastPackets>0</OutMulticastPackets>
+               <OutBroadcastPackets>0</OutBroadcastPackets>
+               <InOctets>0</InOctets>
+               <OutOctets>0</OutOctets>
+               <InErrors>0</InErrors>
+               <OutErrors>0</OutErrors>
+               <OutDiscards>0</OutDiscards>
+               <AlignmentErrors>0</AlignmentErrors>
+               <FCSErrors>0</FCSErrors>
+               <SingleCollisionFrames>0</SingleCollisionFrames>
+               <MultipleCollisionFrames>0</MultipleCollisionFrames>
+               <SQETestErrors>0</SQETestErrors>
+               <DeferredTransmissions>0</DeferredTransmissions>
+               <LateCollisions>0</LateCollisions>
+               <ExcessiveCollisions>0</ExcessiveCollisions>
+               <InternalMacTransmitErrors/>
+               <CarrierSenseErrors>0</CarrierSenseErrors>
+               <FrameTooShorts>0</FrameTooShorts>
+               <FrameTooLongs>0</FrameTooLongs>
+               <InternalMacReceiveErrors>0</InternalMacReceiveErrors>
+               <InPauseFrames>0</InPauseFrames>
+               <OutPauseFrames>0</OutPauseFrames>
+            </EthernetCountersStatus>
+            <EthernetCountersStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <InterfaceIndex>10</InterfaceIndex>
+               <Name>eth14</Name>
+               <InUnicastPackets/>
+               <InMulticastPackets>747</InMulticastPackets>
+               <InBroadcastPackets>130437262</InBroadcastPackets>
+               <OutUnicastPackets/>
+               <OutMulticastPackets>7787894</OutMulticastPackets>
+               <OutBroadcastPackets>1</OutBroadcastPackets>
+               <InOctets>222172831127</InOctets>
+               <OutOctets>184145228182</OutOctets>
+               <InErrors>0</InErrors>
+               <OutErrors>0</OutErrors>
+               <OutDiscards>0</OutDiscards>
+               <AlignmentErrors>0</AlignmentErrors>
+               <FCSErrors>0</FCSErrors>
+               <SingleCollisionFrames>0</SingleCollisionFrames>
+               <MultipleCollisionFrames>0</MultipleCollisionFrames>
+               <SQETestErrors>0</SQETestErrors>
+               <DeferredTransmissions>0</DeferredTransmissions>
+               <LateCollisions>0</LateCollisions>
+               <ExcessiveCollisions>0</ExcessiveCollisions>
+               <InternalMacTransmitErrors/>
+               <CarrierSenseErrors>0</CarrierSenseErrors>
+               <FrameTooShorts>0</FrameTooShorts>
+               <FrameTooLongs>0</FrameTooLongs>
+               <InternalMacReceiveErrors>0</InternalMacReceiveErrors>
+               <InPauseFrames>0</InPauseFrames>
+               <OutPauseFrames>0</OutPauseFrames>
+            </EthernetCountersStatus>
+            <EthernetCountersStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <InterfaceIndex>11</InterfaceIndex>
+               <Name>eth15</Name>
+               <InUnicastPackets/>
+               <InMulticastPackets>0</InMulticastPackets>
+               <InBroadcastPackets>0</InBroadcastPackets>
+               <OutUnicastPackets/>
+               <OutMulticastPackets>0</OutMulticastPackets>
+               <OutBroadcastPackets>0</OutBroadcastPackets>
+               <InOctets>0</InOctets>
+               <OutOctets>0</OutOctets>
+               <InErrors>0</InErrors>
+               <OutErrors>0</OutErrors>
+               <OutDiscards>0</OutDiscards>
+               <AlignmentErrors>0</AlignmentErrors>
+               <FCSErrors>0</FCSErrors>
+               <SingleCollisionFrames>0</SingleCollisionFrames>
+               <MultipleCollisionFrames>0</MultipleCollisionFrames>
+               <SQETestErrors>0</SQETestErrors>
+               <DeferredTransmissions>0</DeferredTransmissions>
+               <LateCollisions>0</LateCollisions>
+               <ExcessiveCollisions>0</ExcessiveCollisions>
+               <InternalMacTransmitErrors/>
+               <CarrierSenseErrors>0</CarrierSenseErrors>
+               <FrameTooShorts>0</FrameTooShorts>
+               <FrameTooLongs>0</FrameTooLongs>
+               <InternalMacReceiveErrors>0</InternalMacReceiveErrors>
+               <InPauseFrames>0</InPauseFrames>
+               <OutPauseFrames>0</OutPauseFrames>
+            </EthernetCountersStatus>
+            <EthernetCountersStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <InterfaceIndex>12</InterfaceIndex>
+               <Name>eth16</Name>
+               <InUnicastPackets/>
+               <InMulticastPackets>0</InMulticastPackets>
+               <InBroadcastPackets>0</InBroadcastPackets>
+               <OutUnicastPackets/>
+               <OutMulticastPackets>0</OutMulticastPackets>
+               <OutBroadcastPackets>0</OutBroadcastPackets>
+               <InOctets>0</InOctets>
+               <OutOctets>0</OutOctets>
+               <InErrors>0</InErrors>
+               <OutErrors>0</OutErrors>
+               <OutDiscards>0</OutDiscards>
+               <AlignmentErrors>0</AlignmentErrors>
+               <FCSErrors>0</FCSErrors>
+               <SingleCollisionFrames>0</SingleCollisionFrames>
+               <MultipleCollisionFrames>0</MultipleCollisionFrames>
+               <SQETestErrors>0</SQETestErrors>
+               <DeferredTransmissions>0</DeferredTransmissions>
+               <LateCollisions>0</LateCollisions>
+               <ExcessiveCollisions>0</ExcessiveCollisions>
+               <InternalMacTransmitErrors/>
+               <CarrierSenseErrors>0</CarrierSenseErrors>
+               <FrameTooShorts>0</FrameTooShorts>
+               <FrameTooLongs>0</FrameTooLongs>
+               <InternalMacReceiveErrors>0</InternalMacReceiveErrors>
+               <InPauseFrames>0</InPauseFrames>
+               <OutPauseFrames>0</OutPauseFrames>
+            </EthernetCountersStatus>
+            <EthernetCountersStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <InterfaceIndex>13</InterfaceIndex>
+               <Name>eth17</Name>
+               <InUnicastPackets/>
+               <InMulticastPackets>0</InMulticastPackets>
+               <InBroadcastPackets>0</InBroadcastPackets>
+               <OutUnicastPackets/>
+               <OutMulticastPackets>0</OutMulticastPackets>
+               <OutBroadcastPackets>0</OutBroadcastPackets>
+               <InOctets>0</InOctets>
+               <OutOctets>0</OutOctets>
+               <InErrors>0</InErrors>
+               <OutErrors>0</OutErrors>
+               <OutDiscards>0</OutDiscards>
+               <AlignmentErrors>0</AlignmentErrors>
+               <FCSErrors>0</FCSErrors>
+               <SingleCollisionFrames>0</SingleCollisionFrames>
+               <MultipleCollisionFrames>0</MultipleCollisionFrames>
+               <SQETestErrors>0</SQETestErrors>
+               <DeferredTransmissions>0</DeferredTransmissions>
+               <LateCollisions>0</LateCollisions>
+               <ExcessiveCollisions>0</ExcessiveCollisions>
+               <InternalMacTransmitErrors/>
+               <CarrierSenseErrors>0</CarrierSenseErrors>
+               <FrameTooShorts>0</FrameTooShorts>
+               <FrameTooLongs>0</FrameTooLongs>
+               <InternalMacReceiveErrors>0</InternalMacReceiveErrors>
+               <InPauseFrames>0</InPauseFrames>
+               <OutPauseFrames>0</OutPauseFrames>
+            </EthernetCountersStatus>
+            <EthernetCountersStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <InterfaceIndex>14</InterfaceIndex>
+               <Name>eth20</Name>
+               <InUnicastPackets/>
+               <InMulticastPackets>0</InMulticastPackets>
+               <InBroadcastPackets>0</InBroadcastPackets>
+               <OutUnicastPackets/>
+               <OutMulticastPackets/>
+               <OutBroadcastPackets/>
+               <InOctets>0</InOctets>
+               <OutOctets>0</OutOctets>
+               <InErrors>0</InErrors>
+               <OutErrors>0</OutErrors>
+               <OutDiscards>0</OutDiscards>
+               <AlignmentErrors/>
+               <FCSErrors>0</FCSErrors>
+               <SingleCollisionFrames/>
+               <MultipleCollisionFrames/>
+               <SQETestErrors>0</SQETestErrors>
+               <DeferredTransmissions/>
+               <LateCollisions/>
+               <ExcessiveCollisions>0</ExcessiveCollisions>
+               <InternalMacTransmitErrors/>
+               <CarrierSenseErrors>0</CarrierSenseErrors>
+               <FrameTooShorts>0</FrameTooShorts>
+               <FrameTooLongs>0</FrameTooLongs>
+               <InternalMacReceiveErrors>0</InternalMacReceiveErrors>
+               <InPauseFrames>0</InPauseFrames>
+               <OutPauseFrames>0</OutPauseFrames>
+            </EthernetCountersStatus>
+            <EthernetCountersStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <InterfaceIndex>15</InterfaceIndex>
+               <Name>eth21</Name>
+               <InUnicastPackets/>
+               <InMulticastPackets>0</InMulticastPackets>
+               <InBroadcastPackets>0</InBroadcastPackets>
+               <OutUnicastPackets/>
+               <OutMulticastPackets/>
+               <OutBroadcastPackets/>
+               <InOctets>0</InOctets>
+               <OutOctets>0</OutOctets>
+               <InErrors>0</InErrors>
+               <OutErrors>0</OutErrors>
+               <OutDiscards>0</OutDiscards>
+               <AlignmentErrors/>
+               <FCSErrors>0</FCSErrors>
+               <SingleCollisionFrames/>
+               <MultipleCollisionFrames/>
+               <SQETestErrors>0</SQETestErrors>
+               <DeferredTransmissions/>
+               <LateCollisions/>
+               <ExcessiveCollisions>0</ExcessiveCollisions>
+               <InternalMacTransmitErrors/>
+               <CarrierSenseErrors>0</CarrierSenseErrors>
+               <FrameTooShorts>0</FrameTooShorts>
+               <FrameTooLongs>0</FrameTooLongs>
+               <InternalMacReceiveErrors>0</InternalMacReceiveErrors>
+               <InPauseFrames>0</InPauseFrames>
+               <OutPauseFrames>0</OutPauseFrames>
+            </EthernetCountersStatus>
+         </dp:status>
+      </dp:response>
+   </env:Body>
+</env:Envelope>
+
+
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+   <env:Body>
+      <dp:response xmlns:dp="http://www.datapower.com/schemas/management">
+         <dp:timestamp>2016-08-16T15:43:29+02:00</dp:timestamp>
+         <dp:status>
+            <SQLStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <DataSource class="SQLDataSource">ESBGDB</DataSource>
+               <ReadRequests>0</ReadRequests>
+               <WriteRequests>87</WriteRequests>
+               <FailedReadRequests>0</FailedReadRequests>
+               <FailedWriteRequests>0</FailedWriteRequests>
+            </SQLStatus>
+            <SQLStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <DataSource class="SQLDataSource">LegacyDB</DataSource>
+               <ReadRequests>88288</ReadRequests>
+               <WriteRequests>0</WriteRequests>
+               <FailedReadRequests>0</FailedReadRequests>
+               <FailedWriteRequests>0</FailedWriteRequests>
+            </SQLStatus>
+         </dp:status>
+      </dp:response>
+   </env:Body>
+</env:Envelope>
+
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+   <env:Body>
+      <dp:response xmlns:dp="http://www.datapower.com/schemas/management">
+         <dp:timestamp>2016-08-16T15:44:07+02:00</dp:timestamp>
+         <dp:status>
+            <SQLRuntimeStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Instance>1</Instance>
+               <ProfileName>default</ProfileName>
+               <MaxMemory2>524288</MaxMemory2>
+               <FreeMemory2>46813</FreeMemory2>
+               <TotalMemory2>65536</TotalMemory2>
+            </SQLRuntimeStatus>
+         </dp:status>
+      </dp:response>
+   </env:Body>
+</env:Envelope>
+
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+   <env:Body>
+      <dp:response xmlns:dp="http://www.datapower.com/schemas/management">
+         <dp:timestamp>2016-08-16T15:44:44+02:00</dp:timestamp>
+         <dp:status>
+            <SQLConnectionPoolStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <DataSource class="SQLDataSource">ESBGDB</DataSource>
+               <TotalConnections>0</TotalConnections>
+               <IdleConnections>0</IdleConnections>
+               <ActiveConnections>0</ActiveConnections>
+            </SQLConnectionPoolStatus>
+            <SQLConnectionPoolStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <DataSource class="SQLDataSource">LegacyDB</DataSource>
+               <TotalConnections>7</TotalConnections>
+               <IdleConnections>7</IdleConnections>
+               <ActiveConnections>0</ActiveConnections>
+            </SQLConnectionPoolStatus>
+         </dp:status>
+      </dp:response>
+   </env:Body>
+</env:Envelope>
+
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+   <env:Body>
+      <dp:response xmlns:dp="http://www.datapower.com/schemas/management">
+         <dp:timestamp>2016-08-16T15:46:05+02:00</dp:timestamp>
+         <dp:status>
+            <VoltageSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Voltage +12</Name>
+               <Value>12000</Value>
+               <LowerCriticalThreshold>10600</LowerCriticalThreshold>
+               <UpperCriticalThreshold>13000</UpperCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </VoltageSensors>
+            <VoltageSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Voltage +3.3</Name>
+               <Value>3320</Value>
+               <LowerCriticalThreshold>2960</LowerCriticalThreshold>
+               <UpperCriticalThreshold>3480</UpperCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </VoltageSensors>
+            <VoltageSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Voltage +5</Name>
+               <Value>5080</Value>
+               <LowerCriticalThreshold>4520</LowerCriticalThreshold>
+               <UpperCriticalThreshold>5400</UpperCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </VoltageSensors>
+            <VoltageSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Voltage +5 Standby</Name>
+               <Value>5000</Value>
+               <LowerCriticalThreshold>4520</LowerCriticalThreshold>
+               <UpperCriticalThreshold>5320</UpperCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </VoltageSensors>
+            <VoltageSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Voltage Battery</Name>
+               <Value>3080</Value>
+               <LowerCriticalThreshold>2700</LowerCriticalThreshold>
+               <UpperCriticalThreshold>3460</UpperCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </VoltageSensors>
+            <VoltageSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Voltage CPU Bus Termination</Name>
+               <Value>1100</Value>
+               <LowerCriticalThreshold>960</LowerCriticalThreshold>
+               <UpperCriticalThreshold>1200</UpperCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </VoltageSensors>
+            <VoltageSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Voltage CPU1 Core</Name>
+               <Value>1040</Value>
+               <LowerCriticalThreshold>760</LowerCriticalThreshold>
+               <UpperCriticalThreshold>1240</UpperCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </VoltageSensors>
+            <VoltageSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Voltage CPU2 Core</Name>
+               <Value>1020</Value>
+               <LowerCriticalThreshold>760</LowerCriticalThreshold>
+               <UpperCriticalThreshold>1240</UpperCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </VoltageSensors>
+            <VoltageSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Voltage IOH Core</Name>
+               <Value>1080</Value>
+               <LowerCriticalThreshold>960</LowerCriticalThreshold>
+               <UpperCriticalThreshold>1160</UpperCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </VoltageSensors>
+            <VoltageSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Voltage Memory Bus Termination</Name>
+               <Value>720</Value>
+               <LowerCriticalThreshold>680</LowerCriticalThreshold>
+               <UpperCriticalThreshold>800</UpperCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </VoltageSensors>
+            <VoltageSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Voltage PU +12</Name>
+               <Value>12200</Value>
+               <LowerCriticalThreshold>11400</LowerCriticalThreshold>
+               <UpperCriticalThreshold>12600</UpperCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </VoltageSensors>
+            <VoltageSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Voltage PU +3.3</Name>
+               <Value>3380</Value>
+               <LowerCriticalThreshold>2800</LowerCriticalThreshold>
+               <UpperCriticalThreshold>3500</UpperCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </VoltageSensors>
+            <VoltageSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Voltage PU +5</Name>
+               <Value>5080</Value>
+               <LowerCriticalThreshold>4600</LowerCriticalThreshold>
+               <UpperCriticalThreshold>5360</UpperCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </VoltageSensors>
+         </dp:status>
+      </dp:response>
+   </env:Body>
+</env:Envelope>
+
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+   <env:Body>
+      <dp:response xmlns:dp="http://www.datapower.com/schemas/management">
+         <dp:timestamp>2016-08-16T15:46:41+02:00</dp:timestamp>
+         <dp:status>
+            <CurrentSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Current PU +12V 1</Name>
+               <Value>13200</Value>
+               <UpperCriticalThreshold>44800</UpperCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </CurrentSensors>
+            <CurrentSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Current PU +3.3V</Name>
+               <Value>5200</Value>
+               <UpperCriticalThreshold>16000</UpperCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </CurrentSensors>
+            <CurrentSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Current PU +5V</Name>
+               <Value>2400</Value>
+               <UpperCriticalThreshold>16000</UpperCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </CurrentSensors>
+         </dp:status>
+      </dp:response>
+   </env:Body>
+</env:Envelope>
+
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+   <env:Body>
+      <dp:response xmlns:dp="http://www.datapower.com/schemas/management">
+         <dp:timestamp>2016-08-16T15:47:31+02:00</dp:timestamp>
+         <dp:status>
+            <EnvironmentalFanSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <FanID>fan-tray-1-fan-1</FanID>
+               <FanSpeed>4900</FanSpeed>
+               <LowerCriticalThreshold>2000</LowerCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </EnvironmentalFanSensors>
+            <EnvironmentalFanSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <FanID>fan-tray-2-fan-1</FanID>
+               <FanSpeed>4900</FanSpeed>
+               <LowerCriticalThreshold>2000</LowerCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </EnvironmentalFanSensors>
+            <EnvironmentalFanSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <FanID>fan-tray-3-fan-1</FanID>
+               <FanSpeed>4800</FanSpeed>
+               <LowerCriticalThreshold>2000</LowerCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </EnvironmentalFanSensors>
+         </dp:status>
+      </dp:response>
+   </env:Body>
+</env:Envelope>
+
+
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+   <env:Body>
+      <dp:response xmlns:dp="http://www.datapower.com/schemas/management">
+         <dp:timestamp>2016-08-16T15:48:03+02:00</dp:timestamp>
+         <dp:status>
+            <EnvironmentalFanSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <FanID>fan-tray-1-fan-1</FanID>
+               <FanSpeed>4900</FanSpeed>
+               <LowerCriticalThreshold>2000</LowerCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </EnvironmentalFanSensors>
+            <EnvironmentalFanSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <FanID>fan-tray-2-fan-1</FanID>
+               <FanSpeed>4900</FanSpeed>
+               <LowerCriticalThreshold>2000</LowerCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </EnvironmentalFanSensors>
+            <EnvironmentalFanSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <FanID>fan-tray-3-fan-1</FanID>
+               <FanSpeed>4800</FanSpeed>
+               <LowerCriticalThreshold>2000</LowerCriticalThreshold>
+               <ReadingStatus>ok</ReadingStatus>
+            </EnvironmentalFanSensors>
+         </dp:status>
+      </dp:response>
+   </env:Body>
+</env:Envelope>
+
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+   <env:Body>
+      <dp:response xmlns:dp="http://www.datapower.com/schemas/management">
+         <dp:timestamp>2016-08-16T15:48:54+02:00</dp:timestamp>
+         <dp:status>
+            <EnvironmentalSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <systemTemp>0</systemTemp>
+               <cpu1Temp>22</cpu1Temp>
+               <cpu2Temp>14</cpu2Temp>
+               <cpu1rpm>0</cpu1rpm>
+               <cpu2rpm>0</cpu2rpm>
+               <chassis1rpm>0</chassis1rpm>
+               <chassis2rpm>0</chassis2rpm>
+               <chassis3rpm>0</chassis3rpm>
+               <caseopen>no</caseopen>
+               <volt33>3.32</volt33>
+               <volt5>5.08</volt5>
+               <volt12>12.0</volt12>
+               <powersupply>ok</powersupply>
+               <batteryinstalldate>1970/01/01 01:59:59</batteryinstalldate>
+               <checkintrusion>yes</checkintrusion>
+            </EnvironmentalSensors>
+         </dp:status>
+      </dp:response>
+   </env:Body>
+</env:Envelope>
+
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+   <env:Body>
+      <dp:response xmlns:dp="http://www.datapower.com/schemas/management">
+         <dp:timestamp>2016-08-16T15:50:08+02:00</dp:timestamp>
+         <dp:status>
+            <OtherSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Intrusion Detected</Name>
+               <Value>false</Value>
+               <ReadingStatus>ok</ReadingStatus>
+            </OtherSensors>
+            <OtherSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Power Supply 1 Output Failure</Name>
+               <Value>false</Value>
+               <ReadingStatus>ok</ReadingStatus>
+            </OtherSensors>
+            <OtherSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Power Supply 1 Present</Name>
+               <Value>true</Value>
+               <ReadingStatus>ok</ReadingStatus>
+            </OtherSensors>
+            <OtherSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Power Supply 2 Output Failure</Name>
+               <Value>false</Value>
+               <ReadingStatus>ok</ReadingStatus>
+            </OtherSensors>
+            <OtherSensors xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <Name>Power Supply 2 Present</Name>
+               <Value>true</Value>
+               <ReadingStatus>ok</ReadingStatus>
+            </OtherSensors>
+         </dp:status>
+      </dp:response>
+   </env:Body>
+</env:Envelope>
+
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+   <env:Body>
+      <dp:response xmlns:dp="http://www.datapower.com/schemas/management">
+         <dp:timestamp>2016-08-16T15:51:05+02:00</dp:timestamp>
+         <dp:status>
+            <RaidArrayStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <ControllerID>1</ControllerID>
+               <ArrayID>1</ArrayID>
+               <LogicalDriveID>1</LogicalDriveID>
+               <RaidLevel>raidLevel1</RaidLevel>
+               <NumPhysicalDrives>2</NumPhysicalDrives>
+               <TotalSize>571250</TotalSize>
+            </RaidArrayStatus>
+            <RaidArrayStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <ControllerID>1</ControllerID>
+               <ArrayID>2</ArrayID>
+               <LogicalDriveID>1</LogicalDriveID>
+               <RaidLevel>raidLevel1</RaidLevel>
+               <NumPhysicalDrives>2</NumPhysicalDrives>
+               <TotalSize>571250</TotalSize>
+            </RaidArrayStatus>
+         </dp:status>
+      </dp:response>
+   </env:Body>
+</env:Envelope>
+
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+   <env:Body>
+      <dp:response xmlns:dp="http://www.datapower.com/schemas/management">
+         <dp:timestamp>2016-08-16T16:02:17+02:00</dp:timestamp>
+         <dp:status>
+            <MQConnStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <QueueManager class="MQQM">DPQSG</QueueManager>
+               <TotalConnLimit>20</TotalConnLimit>
+               <TotalConn>8</TotalConn>
+               <TotalIdleConn>1</TotalIdleConn>
+               <TotalActiveConn>7</TotalActiveConn>
+               <ActiveFrontConn>7</ActiveFrontConn>
+               <ActiveBackConn>0</ActiveBackConn>
+            </MQConnStatus>
+            <MQConnStatus xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+               <QueueManager class="MQQM">LegacyQSG</QueueManager>
+               <TotalConnLimit>20</TotalConnLimit>
+               <TotalConn>1</TotalConn>
+               <TotalIdleConn>1</TotalIdleConn>
+               <TotalActiveConn>0</TotalActiveConn>
+               <ActiveFrontConn>0</ActiveFrontConn>
+               <ActiveBackConn>0</ActiveBackConn>
+            </MQConnStatus>
+         </dp:status>
+      </dp:response>
+   </env:Body>
+</env:Envelope>
