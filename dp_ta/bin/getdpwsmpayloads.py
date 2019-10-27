@@ -17,8 +17,8 @@ except:
     pass
 
 MONGODB_HOST = "127.0.0.1"
-MONGODB_PORT = 27017
-MONGODB_DB_NAME = "dptrans"
+MONGODB_PORT = 27018
+MONGODB_DB_NAME = "dpwsm"
 MONGODB_USER = "splunk"
 MONGODB_PASSWORD = "splunk"
 MONGODB_AUTH_DB = "admin"

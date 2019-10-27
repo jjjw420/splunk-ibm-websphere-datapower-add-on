@@ -33,6 +33,9 @@ conns_accepted_int = <value>
 *memory status interval
 memory_int = <value>
 
+*filesystem status interval
+file_system_int = <value>
+
 *Only log stats for interfaces with IP Addresses.
 only_eth_ints_with_ips= <value>
 
@@ -44,6 +47,33 @@ network_int = <value>
 
 *system usage interval
 system_usage_int = <value>
+
+
+*capture active user statistics
+active_users= <value>
+
+*capture log target int
+active_users_int= <value>
+
+*capture date time status 
+date_time_status= <value>
+
+*capture date time status int
+date_time_status_int= <value>
+
+
+*capture Domain related statistics
+domain_status= <value>
+
+*capture Domain int
+domain_status_int= <value>
+
+
+*capture log target related statistics
+log_target_status= <value>
+
+*capture log target int
+log_target_status_int= <value>
 
 
 *capture Object Status
@@ -60,6 +90,13 @@ http_int= <value>
 
 *Capture Service related memory statistics
 service_memory_status= <value>
+
+
+*capture Load Balancer related statistics
+load_balancer_status= <value>
+
+*capture HTTP int
+load_balancer_status_int= <value>
 
 *Capture SQL related statistics and status
 sql_status= <value>
@@ -87,10 +124,12 @@ ws_op_status_int=<value>
 web_app_fw_stats= <value>
 web_app_fw_int= <value>
 
+*Capture WSM agent and publisher statistics.
+wsm_stats= <value>
+wsm_stats_int= <value>
 
 *Use WS-M to capture transactions
 use_wsm= <value>
-wsm_stats_int= <value>
 
 *Enable the WS-M agents.
 enable_wsm= <value>
@@ -178,6 +217,123 @@ wsm_msg_payloads_mongodb_user= <value>
 
 *MongoDB database password
 wsm_msg_payloads_mongodb_password= <value>
+
+
+*MongoDB database retention
+wsm_msg_payloads_mongodb_retention= <value>
+*MongoDB database retention period
+wsm_msg_payloads_mongodb_retention_period= <value>
+
+
+
+[dpwsminput://<name>]
+
+*Datapower Device Name
+device_name= <value>
+
+*IP or hostname of the device
+device_host= <value>
+
+*The SOMA port on the device.  Defaults to 5550
+soma_port= <value>
+
+*The user to use when querying the device.
+soma_user= <value>
+
+*The password for the user.
+soma_user_password= <value>
+
+*Enable the WS-M agents.
+enable_wsm= <value>
+
+*Use WS-M in the following domains.  comma separated.
+wsm_domains= <value>
+
+*Use WS-M transaction time as event time
+use_wsm_transaction_time = <value>
+
+*WS-M maximum record size.
+wsm_max_rec_size= <value>
+
+*WS-M maximum memory usage.
+wsm_max_mem= <value>
+
+*WS-M capture mode.
+wsm_capture_mode= <value>
+
+*WS-M buffering mode.
+wsm_buf_mode= <value>
+
+*WS-M mediation enforcement metrics.
+wsm_med_enf_metrics= <value>
+
+*WS-M pull subscription
+wsm_pull= <value>
+
+*WS-M Pull interval
+wsm_pull_interval= <value>
+
+*WS-M Pull maximum SOAP Envelope size
+wsm_pull_max_soap_env_size= <value>
+
+*WS-M Pull maximum number of elements
+wsm_pull_max_elements= <value>
+
+*Use the custom splunk_dpinput wsm formatter
+wsm_pull_use_custom_formatter= <value>
+
+
+
+
+*WS-M Push subscription
+wsm_push= <value>
+
+
+*WS-M push host
+wsm_push_server_host= <value>
+
+*WS-M push port
+wsm_push_server_port= <value>
+
+*WS-M server thread per domain
+wsm_push_server_thread_per_domain= <value>
+
+
+*WS-M push subscription
+wsm_push_max_elements= <value>
+
+*Write WS-M payloads to disk or index in splunk
+wsm_msg_payloads_to_disk= <value>
+
+*Write WS-M payloads to disk or index in splunk
+wsm_msg_payloads_folder= <value>
+
+*Write WS-M message payloads to a Mongo database in order to save on file-system inodes
+wsm_msg_payloads_use_mongodb= <value>
+
+*MongoDB database name
+wsm_msg_payloads_mongodb_db_name= <value>
+
+*MongoDB database host
+wsm_msg_payloads_mongodb_host= <value>
+
+*MongoDB database port
+wsm_msg_payloads_mongodb_port= <value>
+
+*MongoDB database use auth
+wsm_msg_payloads_mongodb_use_auth= <value>
+
+*MongoDB database user
+wsm_msg_payloads_mongodb_user= <value>
+
+*MongoDB database password
+wsm_msg_payloads_mongodb_password= <value>
+
+
+*MongoDB database retention
+wsm_msg_payloads_mongodb_retention= <value>
+*MongoDB database retention period
+wsm_msg_payloads_mongodb_retention_period= <value>
 
 
 

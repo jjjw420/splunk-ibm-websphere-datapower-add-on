@@ -1,12 +1,14 @@
 '''
-IBM Websphere Datapower Modular Input for Splunk
+IBM Websphere Datapower WSM Modular Input for Splunk
 Hannes Wagener - 2016
+
+Used the Splunk provided modular input as example.
 
 DISCLAIMER
 You are free to use this code in any way you like, subject to the
 Python & IBM disclaimers & copyrights. I make no representations
 about the suitability of this software for any purpose. It is
-provided "AS-IS" without warranty of any kind, either express or
+provided "AS-IS" without warranty of any kind, eithersoma_url express or
 implied.
 
 '''
@@ -40,8 +42,8 @@ logging.getLogger("requests").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 SCHEME = """<scheme>
-    <title>IBM Websphere Datapower Statistics</title>
-    <description>IBM Websphere Datapower Statistics Input for Splunk</description>
+    <title>IBM Websphere Datapower WS-M</title>
+    <description>IBM Websphere Datapower WS-M Input for Splunk</description>
     <use_external_validation>true</use_external_validation>
     <streaming_mode>xml</streaming_mode>
     <use_single_instance>false</use_single_instance>
@@ -73,302 +75,6 @@ SCHEME = """<scheme>
              <arg name="soma_user_password">
                 <title>The SOMA user's password</title>
                 <description>The users password</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="dpinput_interval">
-                <title>Interval</title>
-                <description>How often to run the MQ input script. Defaults to 60 seconds.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-           <arg name="cpu_usage_int">
-                <title>CPU Usage Interval</title>
-                <description>How often to capture CPU usage statistics. Defaults to 60 seconds.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-           <arg name="conns_accepted_int">
-                <title>Connections Accepted Interval</title>
-                <description>How often to capture Connection Accepted statistics. Defaults to 60 seconds.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-           <arg name="memory_int">
-                <title>Memory Usage Interval</title>
-                <description>How often to capture Memory usage statistics. Defaults to 300 seconds.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-            
-           <arg name="file_system_int">
-                <title>Memory Usage Interval</title>
-                <description>How often to capture Memory usage statistics. Defaults to 300 seconds.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-           <arg name="tx_rx_kbps_thruput_int">
-                <title>Network Transmit and Receive Kbps Interval</title>
-                <description>How often to capture Network Transmit and Receive Kbps statistics. Defaults to 60 seconds.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-           <arg name="network_int">
-                <title>Network Statistics Interval</title>
-                <description>How often to capture Network and TCP related statistics. Defaults to 300 seconds.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-           <arg name="system_usage_int">
-                <title>System Usage Interval</title>
-                <description>How often to capture System usage statistics. Defaults to 300 seconds.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="enable_stats">
-                <title>Enable statistics gathering.</title>
-                <description>Enable statistics gathering.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="enable_stats_domains">
-                <title>Enable statistics gathering in the listed domains.</title>
-                <description>Enable statistics gathering in the listed domains. Empty will enable for all domains.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="only_eth_ints_with_ips">
-                <title>Ethernet Interfaces with IP's only.</title>
-                <description>Capture network statistics for interfaces with IP's only.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-            
-            <arg name="active_users">
-                <title>Capture Active User Status</title>
-                <description>Capture Active User Status. </description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-            
-            <arg name="active_users_int">
-                <title>Capture Active User Status Interval</title>
-                <description>How often to capture active user status output. Defaults to 900 seconds.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-            
-               <arg name="date_time_status">
-                <title>Capture Date and time Status</title>
-                <description>Capture Active Date and time Status. </description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-            
-            <arg name="date_time_status_int">
-                <title>Capture Date and time Status Interval</title>
-                <description>How often to capture date and time status output. Defaults to 900 seconds.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-
-
-            <arg name="domain_status">
-                <title>Capture Domain Status</title>
-                <description>Capture Domain Status. </description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="domain_status_int">
-                <title>Capture Domain Status Interval</title>
-                <description>How often to capture domain status output. Defaults to 900 seconds.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="log_target_status">
-                <title>Capture Log Target Status</title>
-                <description>Capture Log Target Status. </description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="log_target_status_int">
-                <title>Capture Log Target Status Interval</title>
-                <description>How often to capture log target status output. Defaults to 900 seconds.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-
-
-            <arg name="object_status">
-                <title>Capture Object Status</title>
-                <description>Capture Object Status. </description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="object_status_int">
-                <title>Capture Object Status Interval</title>
-                <description>How often to capture object status output. Defaults to 900 seconds.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="http_status">
-                <title>Capture HTTP statistics</title>
-                <description>Capture HTTP related statistics. Will capture statistics for all domains.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="http_int">
-                <title>HTTP statistics interval</title>
-                <description>How often to capture HTTP related statistics. Defaults to 60.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-
-            <arg name="service_memory_status">
-                <title>Capture Service Memory statistics</title>
-                <description>Capture Service memory statistics. Will capture statistics for all domains.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-            
-            <arg name="load_balancer_status">
-                <title>Capture Load Balancer Status</title>
-                <description>Capture Load Balancer Status. </description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="load_balancer_status_int">
-                <title>Capture Log Target Status Interval</title>
-                <description>How often to capture load balancer staus output. Defaults to 900 seconds.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-
-            <arg name="sql_status">
-                <title>Capture SQL statistics.</title>
-                <description>Capture SQL related statistics. Will capture statistics for all domains.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="sql_int">
-                <title>SQL statistics interval</title>
-                <description>How often to capture SQL related statistics. Defaults to 300.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="mq_status">
-                <title>Capture Websphere MQ statistics.</title>
-                <description>Capture Websphere MQ related statistics. Will capture statistics for all domains.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="mq_int">
-                <title>MQ statistics interval</title>
-                <description>How often to capture MQ related statistics. Defaults to 300.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="sensors_status">
-                <title>Capture Hardware and sensor statistics</title>
-                <description>Capture Hardware and other sensor statistics. </description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="sensors_int">
-                <title>Hardware and Sensor statistics interval</title>
-                <description>How often to capture Hardware and Sensor related statistics. Defaults to 300.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="xslt_status">
-                <title>Capture XSLT statistics</title>
-                <description>Capture XSLT related statistics. Will capture statistics for all domains.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="xslt_int">
-                <title>XSLT and XML statistics interval</title>
-                <description>How often to capture XSLT and XML related statistics. Defaults to 300.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="ws_op_status">
-                <title>Capture Web service operation metrics.</title>
-                <description>Capture Web service operation metrics. Will capture statistics for all domains.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="ws_op_status_int">
-                <title>Web servce operation statistics interval</title>
-                <description>How often to capture web service operation related statistics. Defaults to 300.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-
-
-            <arg name="web_app_fw_stats">
-                <title>Capture WebAppFw accepted and rejected statistics.</title>
-                <description>Capture WebAppFw accepted and rejected statistics.. Will capture statistics for all domains.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="web_app_fw_int">
-                <title>WebAppFw statistics interval</title>
-                <description>How often to capture WebAppFw related statistics. Defaults to 300.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-              <arg name="wsm_stats">
-                <title>Capture WSM Agent and spoolers statistics</title>
-                <description>How often to capture WSM Agent and spoolers related statistics. Defaults to 300.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-            <arg name="wsm_stats_int">
-                <title>WSM Agent and spoolers statistics interval</title>
-                <description>How often to capture WSM Agent and spoolers related statistics. Defaults to 300.</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>false</required_on_create>
-            </arg>
-
-
-            <arg name="use_wsm">
-                <title>Use WS-M to capture transaction statistics.</title>
-                <description>Use WS-M to capture transaction statistics. </description>
                 <required_on_edit>false</required_on_edit>
                 <required_on_create>false</required_on_create>
             </arg>
@@ -566,7 +272,7 @@ SCHEME = """<scheme>
                 <required_on_edit>false</required_on_edit>
                 <required_on_create>false</required_on_create>
             </arg>
-
+            
             <arg name="wsm_msg_payloads_mongodb_retention">
                 <title>Enable auto retention</title>
                 <description>Enable auto retention</description>
@@ -580,6 +286,7 @@ SCHEME = """<scheme>
                 <required_on_edit>false</required_on_edit>
                 <required_on_create>false</required_on_create>
             </arg>
+
 
         </args>
     </endpoint>
@@ -596,11 +303,15 @@ def do_validate():
         soma_user = config.get("soma_user")
         soma_user_password = config.get("soma_user_password")
         dpinput_interval = config.get("dpinput_interval")
-        
+
         validationFailed = False
 
         if device_host is None:
             print_validation_error("Device host is mandatory.")
+            validationFailed = True
+
+        if soma_port is None or int(soma_port) < 1:
+            print_validation_error("SOMA Port value must be a positive integer")
             validationFailed = True
 
         if soma_user is None:
@@ -963,62 +674,7 @@ def do_run():
     soma_port = int(config.get("soma_port",5550))
     soma_user = config.get("soma_user")
     soma_user_password = config.get("soma_user_password")
-    dpinput_interval = float(config.get("dpinput_interval",60))
-    cpu_usage_int = float(config.get("cpu_usage_int",60))
-    conns_accepted_int = float(config.get("conns_accepted_int",60))
-    memory_int = float(config.get("memory_int",300))
-    file_system_int = float(config.get("file_system_int",300))
-    tx_rx_kbps_thruput_int = float(config.get("tx_rx_kbps_thruput_int",60))
-    network_int = float(config.get("network_int",300))
-    system_usage_int = float(config.get("system_usage_int",300))
-    enable_stats = int(config.get("enable_stats",0))
-    enable_stats_domains = config.get("enable_stats_domains")
-    only_eth_ints_with_ips = int(config.get("only_eth_ints_with_ips",0))
-
-    active_users = int(config.get("active_users",0))
-    active_users_int = float(config.get("active_users_int",900))
-
-    date_time_status = int(config.get("date_time_status",0))
-    date_time_status_int = float(config.get("date_time_status_int",900))
-
-    domain_status = int(config.get("domain_status",0))
-    domain_status_int = float(config.get("domain_status_int",300))
-
-    log_target_status = int(config.get("log_target_status",0))
-    log_target_status_int = float(config.get("log_target_status_int",300))
-
-    object_status = int(config.get("object_status",0))
-    object_status_int = float(config.get("object_status_int",900))
-
-    http_status = int(config.get("http_status",0))
-    http_int = float(config.get("http_int",60))
-
-    service_memory_status = int(config.get("service_memory_status",0))
-
-    load_balancer_status = int(config.get("load_balancer_status",0))
-    load_balancer_status_int = float(config.get("load_balancer_status_int",300))
-
-    sql_status = int(config.get("sql_status",0))
-    sql_int = float(config.get("sql_int",300))
     
-    mq_status = int(config.get("mq_status",0))
-    mq_int = float(config.get("mq_int",300))
-    sensors_status = int(config.get("sensors_status",0))
-    sensors_int = float(config.get("sensors_int",300))
-
-    xslt_status = int(config.get("xslt_status",0))
-    xslt_int = float(config.get("xslt_int",300))
-
-    ws_op_status = int(config.get("ws_op_status",0))
-    ws_op_int = float(config.get("ws_op_int",300))
-
-    web_app_fw_stats = int(config.get("web_app_fw_stats",0))
-    web_app_fw_int = float(config.get("web_app_fw_int",300))
-
-    wsm_stats = int(config.get("wsm_stats",0))
-    wsm_stats_int = float(config.get("wsm_stats_int",300))
-
-    use_wsm = int(config.get("use_wsm",0))  
     enable_wsm = int(config.get("enable_wsm",0))
     wsm_domains = config.get("wsm_domains")
     use_wsm_transaction_time = int(config.get("use_wsm_transaction_time",0))
@@ -1031,7 +687,7 @@ def do_run():
     wsm_pull_interval = int(config.get("wsm_pull_interval",60))
     wsm_pull_max_soap_env_size = int(config.get("wsm_pull_max_soap_env_size",51200))
     wsm_pull_max_elements = int(config.get("wsm_pull_max_elements",10))
-    wsm_pull_use_custom_formatter = int(config.get("wsm_pull_use_custom_formatter",1))
+    wsm_pull_use_custom_formatter = int(config.get("wsm_pull_use_custom_formatter",0))
     wsm_push = int(config.get("wsm_push",0))
     wsm_push_server_host = config.get("wsm_push_server_host")
     wsm_push_server_port = int(config.get("wsm_push_server_port",14014))
@@ -1050,7 +706,6 @@ def do_run():
     wsm_msg_payloads_mongodb_retention = int(config.get("wsm_msg_payloads_mongodb_retention",0))
     wsm_msg_payloads_mongodb_retention_period = int(config.get("wsm_msg_payloads_mongodb_retention_period", 31))
     
-    
     wsm_msg_payloads_mongodb_client = None
 
     if (device_host is None) or (soma_port is None) or (soma_user is None) or (soma_user_password is None):
@@ -1058,17 +713,10 @@ def do_run():
         return
 
     soma_session = None
-    network_stats_interface_list = None
-    enable_stats_domain_list = None
-    wsm_domain_list = None
-    enable_stats_domain_list = None
     wsm_domain_list = None
     domain_list = None
-
-    if enable_stats_domains is not None:
-        enable_stats_domain_list = map(str,enable_stats_domains.split(","))
-        enable_stats_domain_list = [x.strip(' ') for x in enable_stats_domain_list]
-
+    ws_op_dict = {}
+    
     if wsm_domains is not None:
         wsm_domain_list = map(str,wsm_domains.split(","))
         wsm_domain_list = [x.strip(' ') for x in wsm_domain_list]
@@ -1078,7 +726,7 @@ def do_run():
         sleep_time = 900
         while(device_comms_ok == False):
 
-            logging.info("Creating SOMA session to device %s (%s:%s)." % (device_name, device_host, soma_port))
+            logging.info("Creating SOMA session to device %s (%s:%s) for WS-M." % (device_name, device_host, soma_port))
             soma_session = requests.Session()
             soma_session.auth = (soma_user, soma_user_password)
             soma_session.verify = False
@@ -1101,29 +749,16 @@ def do_run():
             time.sleep(sleep_time)
 
         logging.debug("Communication to device %s ok." % device_name)
-
-        if enable_stats:
-
-            if enable_stats_domain_list is None:
-                enable_stats_domain_list = domain_list
-
-            for domain in enable_stats_domain_list:
-                if get_config_enabled(soma_session, device_host, soma_port, soma_user, soma_user_password, domain, "Statistics"):
-                    logging.debug("Statistics already enabled for domain %s." % domain)
-                else:
-                    if not enable_statistics_domain(soma_session, device_host, soma_port, soma_user, soma_user_password, domain):
-                        logging.error("Enable statistics for domain %s failed!" % domain)
-                    else:
-                        logging.debug("Enabled statistics for domain %s." % domain)
-
-        ws_op_dict = {}
-        if (use_wsm > 0) and (enable_wsm > 0):
+        if wsm_domain_list is None:
+            wsm_domain_list = domain_list
+        
+        if (enable_wsm > 0):
             if wsm_domain_list is None:
                 wsm_domain_list = domain_list
 
             for domain in wsm_domain_list:
 
-                if get_config_enabled(soma_session, device_host, soma_port, soma_user, soma_user_password, domain, "WebServicesAgent"):
+                if get_config_enabled(soma_session, device_host, soma_port, soma_user, soma_user_password, domain, "WebServicesAgent") == False:
                     logging.debug("WebServicesAgent already enabled for domain %s." % domain)
                 else:
 
@@ -1136,35 +771,69 @@ def do_run():
                 domain_wsm_op_dict[domain] = ws_op_dict
                 #logging.debug("WS Op dict for domain %s is %s" % (domain, ws_op_dict))
 
-        if only_eth_ints_with_ips > 0:
-            network_stats_interface_list = get_eth_ints_with_ips(soma_session, device_host, "default", soma_port, soma_user, soma_user_password)
-
         soma_session.close()
         thread_id = str(uuid.uuid4())
+
         pid_fle = open("/tmp/%s_current.pid" % input_name.replace("://", "-"), "w")
         pid_fle.write(thread_id)
         pid_fle.close()
 
-        logging.debug("Starting thread %s for %s." % (thread_id, input_name.replace("://", "-")))
-        soma_t = SOMAPollerThread(thread_id, input_name, splunk_host, device_name,
-                                  device_host, soma_port, soma_user, soma_user_password, dpinput_interval,
-                                  cpu_usage_int, conns_accepted_int, memory_int, file_system_int,
-                                  network_stats_interface_list, tx_rx_kbps_thruput_int, network_int, system_usage_int, active_users, active_users_int, date_time_status, date_time_status_int, domain_status, domain_status_int, log_target_status, log_target_status_int, object_status, object_status_int,
-                                  http_status, http_int, service_memory_status, load_balancer_status, load_balancer_status_int, sql_status, sql_int, mq_status,mq_int,
-                                  sensors_status, sensors_int, xslt_status, xslt_int, ws_op_status, ws_op_int,
-                                  web_app_fw_stats, web_app_fw_int, wsm_stats, wsm_stats_int, use_wsm, ws_op_dict, domain_list)
-        soma_t.start()
-
-        if use_wsm:
-            if wsm_msg_payloads_folder is None:
+        if wsm_msg_payloads_folder is None:
+            wsm_msg_payloads_folder = "/opt/splunk/wsm_msgs"
+        else:
+            if wsm_msg_payloads_folder == "":
                 wsm_msg_payloads_folder = "/opt/splunk/wsm_msgs"
-            else:
-                if wsm_msg_payloads_folder == "":
-                    wsm_msg_payloads_folder = "/opt/splunk/wsm_msgs"
 
-            if wsm_push:
-                wsm_push_threads = []
+        if wsm_push:
+            wsm_push_threads = []
+            if wsm_push_server_thread_per_domain > 0:
+                wsm_msg_payloads_mongodb_client = pymongo.MongoClient(wsm_msg_payloads_mongodb_host, wsm_msg_payloads_mongodb_port)
+                if wsm_msg_payloads_mongodb_use_auth > 0:
+                    logging.debug("Authenticating against db: %s." % (wsm_msg_payloads_mongodb_db_name))
+                    wsm_msg_payloads_mongodb_client[wsm_msg_payloads_mongodb_db_name].authenticate(wsm_msg_payloads_mongodb_user, wsm_msg_payloads_mongodb_password,  source=MONGODB_AUTH_DB);
+                    logging.debug("Authenticated against db: %s. OK" % (wsm_msg_payloads_mongodb_db_name))
+
+                for domain in wsm_domain_list:
+                    thread_id = str(uuid.uuid4())
+                    pid_fle = open("/tmp/%s_wsm_%s_current.pid" % (input_name.replace("://", "-"), "main"), "w")
+                    pid_fle.write(thread_id)
+                    pid_fle.close()
+                    pid_fle = open("/tmp/%s_wsm_%s_current.pid" % (input_name.replace("://", "-"), domain), "w")
+                    pid_fle.write(thread_id)
+                    pid_fle.close()
+                    #with WSMPushServerThread(thread_id, domain, input_name, splunk_host, device_name, device_host, soma_port, soma_user, soma_user_password, use_wsm, wsm_push_server_host, wsm_push_server_port, use_wsm_transaction_time, wsm_push_max_elements, wsm_msg_payloads_to_disk, wsm_msg_payloads_folder, wsm_msg_payloads_use_mongodb, [domain]) as wsm_push_t:
+                    wsm_push_t = WSMPushServerThread(thread_id, domain, input_name, splunk_host, device_name, device_host, soma_port, soma_user, soma_user_password, True, wsm_push_server_host, wsm_push_server_port, use_wsm_transaction_time, wsm_push_max_elements, wsm_msg_payloads_to_disk, wsm_msg_payloads_folder, wsm_msg_payloads_use_mongodb,wsm_msg_payloads_mongodb_client, wsm_msg_payloads_mongodb_db_name,wsm_msg_payloads_mongodb_retention, wsm_msg_payloads_mongodb_retention_period, [domain])
+                    wsm_push_t.start()
+                    wsm_push_threads.append(wsm_push_t)
+                    wsm_push_server_port = wsm_push_server_port + 1
+            else:
                 
+                logging.debug("NOT Thread per domain!!")
+                thread_id = str(uuid.uuid4())
+                pid_fle = open("/tmp/%s_wsm_%s_current.pid" % (input_name.replace("://", "-"), "main"), "w")
+                pid_fle.write(thread_id)
+                pid_fle.close()
+                for domain in domain_list:
+                    pid_fle = open("/tmp/%s_wsm_%s_current.pid" % (input_name.replace("://", "-"), domain), "w")
+                    pid_fle.write(thread_id)
+                    pid_fle.close()
+                logging.debug("Before WSMPushServerThread.init")
+                
+                wsm_msg_payloads_mongodb_client = pymongo.MongoClient(wsm_msg_payloads_mongodb_host, wsm_msg_payloads_mongodb_port)
+                if wsm_msg_payloads_mongodb_use_auth > 0:
+                    logging.debug("Authenticating against db: %s." % (wsm_msg_payloads_mongodb_db_name))
+                    wsm_msg_payloads_mongodb_client[wsm_msg_payloads_mongodb_db_name].authenticate(wsm_msg_payloads_mongodb_user, wsm_msg_payloads_mongodb_password,  source=MONGODB_AUTH_DB);
+                    logging.debug("Authenticated against db: %s. OK" % (wsm_msg_payloads_mongodb_db_name))
+
+
+                #with WSMPushServerThread(thread_id, "main", input_name, splunk_host, device_name, device_host, soma_port, soma_user, soma_user_password, use_wsm, wsm_push_server_host, wsm_push_server_port, use_wsm_transaction_time, wsm_push_max_elements, wsm_msg_payloads_to_disk, wsm_msg_payloads_folder, wsm_msg_payloads_use_mongodb,  wsm_domain_list) as wsm_push_t:
+                wsm_push_t = WSMPushServerThread(thread_id, "main", input_name, splunk_host, device_name, device_host, soma_port, soma_user, soma_user_password, True, wsm_push_server_host, wsm_push_server_port, use_wsm_transaction_time, wsm_push_max_elements, wsm_msg_payloads_to_disk, wsm_msg_payloads_folder, wsm_msg_payloads_use_mongodb,  wsm_msg_payloads_mongodb_client, wsm_msg_payloads_mongodb_db_name,wsm_msg_payloads_mongodb_retention, wsm_msg_payloads_mongodb_retention_period, wsm_domain_list)
+                wsm_push_t.start()
+                wsm_push_threads.append(wsm_push_t)
+                logging.debug("After WSMPushServerThread.init")
+        else:
+            if wsm_pull:
+
                 if wsm_msg_payloads_use_mongodb > 0:
                     logging.debug("Creating Mongo client to %s:%s." % (wsm_msg_payloads_mongodb_host, wsm_msg_payloads_mongodb_port))
                     wsm_msg_payloads_mongodb_client = pymongo.MongoClient(wsm_msg_payloads_mongodb_host, wsm_msg_payloads_mongodb_port)
@@ -1173,496 +842,31 @@ def do_run():
                         wsm_msg_payloads_mongodb_client[wsm_msg_payloads_mongodb_db_name].authenticate(wsm_msg_payloads_mongodb_user, wsm_msg_payloads_mongodb_password,  source=MONGODB_AUTH_DB);
                         logging.debug("Authenticated against db: %s. OK" % (wsm_msg_payloads_mongodb_db_name))
 
-                if wsm_push_server_thread_per_domain > 0:
-                    
-                    for domain in wsm_domain_list:
-                        thread_id = str(uuid.uuid4())
-                        pid_fle = open("/tmp/%s_wsm_%s_current.pid" % (input_name.replace("://", "-"), "main"), "w")
-                        pid_fle.write(thread_id)
-                        pid_fle.close()
-                        pid_fle = open("/tmp/%s_wsm_%s_current.pid" % (input_name.replace("://", "-"), domain), "w")
-                        pid_fle.write(thread_id)
-                        pid_fle.close()
-                        #with WSMPushServerThread(thread_id, domain, input_name, splunk_host, device_name, device_host, soma_port, soma_user, soma_user_password, use_wsm, wsm_push_server_host, wsm_push_server_port, use_wsm_transaction_time, wsm_push_max_elements, wsm_msg_payloads_to_disk, wsm_msg_payloads_folder, wsm_msg_payloads_use_mongodb, [domain]) as wsm_push_t:
-                        wsm_push_t = WSMPushServerThread(thread_id, domain, input_name, splunk_host, device_name, device_host, soma_port, soma_user, soma_user_password, use_wsm, wsm_push_server_host, wsm_push_server_port, use_wsm_transaction_time, wsm_push_max_elements, wsm_msg_payloads_to_disk, wsm_msg_payloads_folder, wsm_msg_payloads_use_mongodb, [domain])
-                        wsm_push_t.start()
-                        wsm_push_threads.append(wsm_push_t)
-                        wsm_push_server_port = wsm_push_server_port + 1
-                else:
-
-                    thread_id = str(uuid.uuid4())
-                    pid_fle = open("/tmp/%s_wsm_%s_current.pid" % (input_name.replace("://", "-"), "main"), "w")
-                    pid_fle.write(thread_id)
-                    pid_fle.close()
-                    for domain in domain_list:
-                        pid_fle = open("/tmp/%s_wsm_%s_current.pid" % (input_name.replace("://", "-"), domain), "w")
-                        pid_fle.write(thread_id)
-                        pid_fle.close()
-
-                    #with WSMPushServerThread(thread_id, "main", input_name, splunk_host, device_name, device_host, soma_port, soma_user, soma_user_password, use_wsm, wsm_push_server_host, wsm_push_server_port, use_wsm_transaction_time, wsm_push_max_elements, wsm_msg_payloads_to_disk, wsm_msg_payloads_folder, wsm_msg_payloads_use_mongodb,  wsm_domain_list) as wsm_push_t:
-                    wsm_push_t = WSMPushServerThread(thread_id, "main", input_name, splunk_host, device_name, device_host, soma_port, soma_user, soma_user_password, use_wsm, wsm_push_server_host, wsm_push_server_port, use_wsm_transaction_time, wsm_push_max_elements, wsm_msg_payloads_to_disk, wsm_msg_payloads_folder, wsm_msg_payloads_use_mongodb,  wsm_domain_list)
-                    wsm_push_t.start()
-                    wsm_push_threads.append(wsm_push_t)
-            else:
-                if wsm_pull:
-
-                    if wsm_msg_payloads_use_mongodb > 0:
-                        logging.debug("Creating Mongo client to %s:%s." % (wsm_msg_payloads_mongodb_host, wsm_msg_payloads_mongodb_port))
-                        wsm_msg_payloads_mongodb_client = pymongo.MongoClient(wsm_msg_payloads_mongodb_host, wsm_msg_payloads_mongodb_port)
-                        if wsm_msg_payloads_mongodb_use_auth > 0:
-                            logging.debug("Authenticating against db: %s." % (wsm_msg_payloads_mongodb_db_name))
-                            wsm_msg_payloads_mongodb_client[wsm_msg_payloads_mongodb_db_name].authenticate(wsm_msg_payloads_mongodb_user, wsm_msg_payloads_mongodb_password,  source=MONGODB_AUTH_DB);
-                            logging.debug("Authenticated against db: %s. OK" % (wsm_msg_payloads_mongodb_db_name))
-
-                    for domain in wsm_domain_list:
+                for domain in wsm_domain_list:
 
 #                         ws_op_dict = get_ws_operations_status(soma_session, device_host, domain, soma_port, soma_user, soma_user_password)
 #                         logging.debug("WS Op dict for domain %s is %s" % (domain, ws_op_dict))
-                        thread_id = str(uuid.uuid4())
-                        pid_fle = open("/tmp/%s_wsm_%s_wsm_pull.pid" % (input_name.replace("://", "-"), domain), "w")
-                        pid_fle.write(thread_id)
-                        pid_fle.close()
+                    thread_id = str(uuid.uuid4())
+                    pid_fle = open("/tmp/%s_wsm_%s_wsm_pull.pid" % (input_name.replace("://", "-"), domain), "w")
+                    pid_fle.write(thread_id)
+                    pid_fle.close()
 
-                        #with WSMPushServerThread(thread_id, domain, input_name, splunk_host, device_name, device_host, soma_port, soma_user, soma_user_password, use_wsm, wsm_push_server_host, wsm_push_server_port, use_wsm_transaction_time, wsm_push_max_elements, wsm_msg_payloads_to_disk, wsm_msg_payloads_folder, wsm_msg_payloads_use_mongodb, [domain]) as wsm_push_t:
-                        wsm_pull_threads.append(WSMPullPollerThread(thread_id, input_name, splunk_host, device_name, device_host, domain, soma_port, soma_user, soma_user_password, use_wsm, wsm_pull_interval, use_wsm_transaction_time, wsm_pull_max_soap_env_size, wsm_pull_max_elements, wsm_pull_use_custom_formatter, wsm_msg_payloads_to_disk, wsm_msg_payloads_folder, wsm_msg_payloads_use_mongodb, wsm_msg_payloads_mongodb_db_name, wsm_msg_payloads_mongodb_client, wsm_msg_payloads_mongodb_retention, wsm_msg_payloads_mongodb_retention_period, ws_op_dict))
-                        wsm_pull_threads[-1].start()
+                    #with WSMPushServerThread(thread_id, domain, input_name, splunk_host, device_name, device_host, soma_port, soma_user, soma_user_password, use_wsm, wsm_push_server_host, wsm_push_server_port, use_wsm_transaction_time, wsm_push_max_elements, wsm_msg_payloads_to_disk, wsm_msg_payloads_folder, wsm_msg_payloads_use_mongodb, [domain]) as wsm_push_t:
+                    wsm_pull_threads.append(WSMPullPollerThread(thread_id, input_name, splunk_host, device_name, device_host, domain, soma_port, soma_user, soma_user_password, wsm_pull_interval, use_wsm_transaction_time, wsm_pull_max_soap_env_size, wsm_pull_max_elements, wsm_pull_use_custom_formatter, wsm_msg_payloads_to_disk, wsm_msg_payloads_folder, wsm_msg_payloads_use_mongodb, wsm_msg_payloads_mongodb_db_name, wsm_msg_payloads_mongodb_client, wsm_msg_payloads_mongodb_retention, wsm_msg_payloads_mongodb_retention_period, ws_op_dict))
+                    wsm_pull_threads[-1].start()
 
     except Exception, ex:
         logging.error("Unhandled Exception occurred in doRun. Exception:" + str(ex))
 
-class SOMAPollerThread(threading.Thread):
-
-    get_status_req = """<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
-        <env:Body>
-            <dp:request domain="{domain}" xmlns:dp="http://www.datapower.com/schemas/management">
-                <dp:get-status class="{status_class}"/>
-            </dp:request>
-        </env:Body>
-    </env:Envelope>
-    """
-
-    def __init__(self, thread_id, input_name, splunk_host, device_name,
-                 device_host, soma_port, soma_user, soma_user_password, dpinput_interval,
-                 cpu_usage_int, conns_accepted_int, memory_int, file_system_int,
-                 network_stats_interface_list, tx_rx_kbps_thruput_int, network_int, system_usage_int, active_users, active_users_int, date_time_status, date_time_status_int, domain_status, domain_status_int, log_target_status, log_target_status_int, object_status, object_status_int,
-                 http_status, http_int, service_memory_status, load_balancer_status, load_balancer_status_int, sql_status, sql_int, mq_status, mq_int,
-                 sensors_status, sensors_int, xslt_status, xslt_int, ws_op_status, ws_op_int,
-                 web_app_fw_stats, web_app_fw_int, wsm_stats, wsm_stats_int, use_wsm, ws_op_dict, domain_list, **kw):
-
-        threading.Thread.__init__(self)
-
-        logging.debug("In _init__ for SOMA Polling Thread %s for input %s." % (thread_id, input_name))
-
-        self.setName(thread_id)
-        self.thread_id = thread_id
-        self.input_name = input_name
-        self.splunk_host = splunk_host
-        self.device_name = device_name
-        self.device_host = device_host
-        self.soma_port = soma_port
-        self.soma_user = soma_user
-        self.soma_user_password = soma_user_password
-        self.dpinput_interval = dpinput_interval
-        self.cpu_usage_int = cpu_usage_int
-        self.conns_accepted_int = conns_accepted_int
-        self.memory_int = memory_int
-        self.file_system_int = file_system_int
-        self.network_stats_interface_list = network_stats_interface_list
-        self.tx_rx_kbps_thruput_int = tx_rx_kbps_thruput_int
-        self.network_int = network_int
-        self.system_usage_int = system_usage_int
-        
-        self.active_users = active_users 
-        self.active_users_int = active_users_int 
-        self.date_time_status = date_time_status
-        self.date_time_status_int =date_time_status_int
-        self.domain_status = domain_status
-        self.domain_status_int = domain_status_int
-        self.log_target_status = log_target_status
-        self.log_target_status_int = log_target_status_int
-
-        self.object_status = object_status
-        self.object_status_int = object_status_int
-
-        self.http_status = http_status
-        self.http_int = http_int
-
-        self.service_memory_status = service_memory_status
-        self.load_balancer_status = load_balancer_status
-        self.load_balancer_status_int = load_balancer_status_int
-        
-        self.sql_status = sql_status
-        self.sql_int = sql_int
-        self.mq_status = mq_status
-        self.mq_int = mq_int
-        self.sensors_status = sensors_status
-        self.sensors_int = sensors_int                      
-        self.xslt_status = xslt_status
-        self.xslt_int = xslt_int
-        self.ws_op_status = ws_op_status
-        self.ws_op_int = ws_op_int
-        self.web_app_fw_stats = web_app_fw_stats
-        self.web_app_fw_int = web_app_fw_int
-        self.use_wsm = use_wsm
-        self.wsm_stats = wsm_stats
-        self.wsm_stats_int = wsm_stats_int
-        self.ws_op_dict = ws_op_dict
-        self.domain_list = domain_list
-        self.kw = kw
-
-        self.soma_url = "https://{device_host}:{soma_port}/service/mgmt/3.0".format(device_host=device_host, soma_port=soma_port)
-        self.check_interval_dict = {}
-
-    def log_event(self, event_text):
-
-        index_time = "[" + datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + " " + time.strftime("%z") + "]"
-        splunk_event = index_time + " " + event_text
-        self.print_xml_single_instance_mode(self.device_name, splunk_event)
-        #logging.debug("Logged event: " + splunk_event)
-
-    def print_xml_single_instance_mode(self, host, event):
-        #logging.debug("Logging event data: %s" % ("<stream><event><data>%s</data><host>%s</host></event></stream>" % (cgi.escape(event), host)))
-        print "<stream><event><data>%s</data><host>%s</host></event></stream>" % (cgi.escape(event), host)
-
-    def run(self):
-
-        while True:
-            try:
-
-                file_pid = str(open("/tmp/%s_current.pid" % self.input_name.replace("://", "-"), "r").read())
-                #logging.debug("******** this pid:" + str(self.getName()) + " File pid:" + str(file_pid))
-                if self.getName().strip() != file_pid.strip():
-                    #logging.debug("$$$$ Stopping... this pid:" + str(self.getName()) + " File pid:" + str(file_pid))
-                    done = True
-                    sys.exit(1)
-                else:
-                    pass
-
-                self.session = requests.Session()
-                self.session.auth = (self.soma_user, self.soma_user_password)
-                self.session.verify = False
-
-                #start getting the events...
-                #self.get_active_users()
-                self.last_run_time = time.time()
-                self.get_status("default", "CPUUsage", check_interval=self.cpu_usage_int)
-                self.get_status("default", "ConnectionsAccepted", check_interval=self.conns_accepted_int)
-
-                self.get_status("default", "TransmitKbpsThroughput", check_interval=self.tx_rx_kbps_thruput_int)
-                self.get_status("default", "ReceiveKbpsThroughput", check_interval=self.tx_rx_kbps_thruput_int)
-
-                self.get_status("default", "MemoryStatus", check_interval=self.memory_int)
-                self.get_status("default", "DomainsMemoryStatus", check_interval=self.memory_int)
-
-                if self.active_users:
-                    self.get_status("default", "ActiveUsers", check_interval=self.active_users_int)
-                
-                if self.date_time_status:
-                    self.get_status("default", "DateTimeStatus", field_prefix="dp_", check_interval=self.date_time_status_int)
-                
-                if self.domain_status:
-                    self.get_status("default", "DomainStatus", check_interval=self.domain_status_int)
-                
-                if self.log_target_status:
-                    self.get_status("default", "LogTargetStatus", check_interval=self.log_target_status_int)
-
-
-                self.get_status("default", "FilesystemStatus", check_interval=self.file_system_int)
-
-                self.get_status("default", "StandbyStatus", check_interval=self.network_int)
-
-                self.get_status("default", "EthernetInterfaceStatus", check_interval=self.network_int)
-                self.get_status("default", "EthernetCountersStatus", check_interval=self.network_int)
-                self.get_status("default", "TCPSummary", check_interval=self.network_int)
-
-
-                #self.get_status("default", "NetworkReceiveDataThroughput", check_interval=self.network_int)
-                #self.get_status("default", "NetworkReceivePacketThroughput")
-                #self.get_status("default", "NetworkTransmitDataThroughput", check_interval=self.network_int)
-                #self.get_status("default", "NetworkTransmitPacketThroughput")
-
-                self.get_status("default", "DocumentCachingSummaryGlobal", check_interval=self.xslt_int)
-                self.get_status("default", "SystemUsage", check_interval=self.system_usage_int)
-                self.get_status("default", "SystemUsage2Table", check_interval=self.system_usage_int)
-
-                self.get_status("default", "XMLNamesStatus", check_interval=self.xslt_int)
-
-                if self.sensors_status:
-                    self.get_status("default", "VoltageSensors", check_interval=self.sensors_int)
-                    self.get_status("default", "CurrentSensors", check_interval=self.sensors_int)
-                    self.get_status("default", "EnvironmentalFanSensors", check_interval=self.sensors_int)
-                    self.get_status("default", "EnvironmentalSensors", check_interval=self.sensors_int)
-
-
-
-                for domain in self.domain_list:
-                    if self.load_balancer_status:
-                        self.get_status(domain, "LoadBalancerStatus2", include_domain=True, check_interval=self.load_balancer_status_int)
-
-                    if self.object_status:
-                        self.get_status(domain, "ObjectStatus", include_domain=True, check_interval=self.object_status_int)
-
-                    if self.http_status:
-                        self.get_status(domain, "HTTPConnections", include_domain=True, check_interval=self.http_int)
-                        #self.get_status(domain, "HTTPMeanTransactionTime2", include_domain=True, check_interval=self.http_int)
-                        #self.get_status(domain, "HTTPTransactions2", include_domain=True, check_interval=self.http_int)
-
-                    if self.mq_status:
-                        self.get_status(domain, "MQConnStatus", include_domain=True, check_interval=self.mq_int)
-                        self.get_status(domain, "MQQMstatus", include_domain=True, check_interval=self.mq_int)
-
-                    if self.sql_status:
-                        self.get_status(domain, "SQLStatus", include_domain=True, check_interval=self.sql_int)
-                        self.get_status(domain, "SQLConnectionPoolStatus", include_domain=True, check_interval=self.sql_int)
-                        self.get_status(domain, "SQLRuntimeStatus", include_domain=True, check_interval=self.sql_int)
-
-                    if self.service_memory_status:
-                        self.get_status(domain, "ServicesMemoryStatus2", include_domain=True, check_interval=self.memory_int)
-
-                    if self.xslt_status:
-                        self.get_status(domain, "StylesheetCachingSummary", include_domain=True, check_interval=self.xslt_int)
-                        self.get_status(domain, "StylesheetExecutions", include_domain=True, check_interval=self.xslt_int)
-                        self.get_status(domain, "StylesheetMeanExecutionTime", include_domain=True, check_interval=self.xslt_int)
-
-                    if self.ws_op_status:
-                        self.get_status(domain, "WSOperationMetrics", include_domain=True, check_interval=self.ws_op_int)
-                        #self.get_status(domain, "WSOperationsStatus", include_domain=True, check_interval=900)
-
-                    if self.wsm_stats:
-                        self.get_status(domain, "WSMAgentStatus", include_domain=True, check_interval=self.wsm_stats_int)
-                        self.get_status(domain, "WSMAgentSpoolers", include_domain=True, check_interval=self.wsm_stats_int)
-
-                    if self.web_app_fw_stats:
-                        self.get_status(domain, "WebAppFwAccepted", include_domain=True, check_interval=self.web_app_fw_int)
-                        self.get_status(domain, "WebAppFwRejected", include_domain=True, check_interval=self.web_app_fw_int)
-
-                logging.info("SOMA Poller finished in %s seconds." % (time.time() - self.last_run_time))
-                #self.session.close()
-                    #logging.debug("!!! NOT Stopping... this pid:" + str(self.getName()) + " File pid:" + str(file_pid))
-            except Exception, ex:
-                logging.error("Exception occurred in SOMAPoller. Stopping.  Exception: " + str(ex))
-                sys.exit(1)
-            finally:
-                pass
-                self.session.close()
-
-            time.sleep(float(self.dpinput_interval))
-
-    def do_soma_request(self, req_data):
-
-        try:
-            #r = self.session.post(self.soma_url, data=req_data, auth=(self.soma_user, self.soma_user_password), verify=False)
-            r = self.session.post(self.soma_url, data=req_data)
-            if r.status_code != 200:
-                logging.error("Soma request failed! Status code: %i" % r.status_code)
-                return None
-            else:
-                return r.content
-
-        except Exception, ex:
-            logging.error("Exception occurred while making SOMA request. Exception: %s" % (str(ex)))
-            return None
-
-    def get_active_users_count(self):
-
-        actve_users_req = self.get_status_req.format(domain="default", status_class="ActiveUsers")
-
-        resp = self.do_soma_request(actve_users_req)
-
-        if resp is None:
-            logging.error("Get of active users for device %s failed!" % (self.device_name))
-            return
-
-        try:
-            doc = lxml.etree.fromstring(resp)
-            nl = doc.xpath("//ActiveUsers")
-
-            num_users = len(nl)
-            event_text = 'device={dp_name} dp_log_type={log_type} '.format(dp_name=self.device_name, log_type="get_status")
-            event_text = event_text + "status_class=active_users_count active_users={}".format(num_users)
-
-            self.log_event(event_text)
-
-        except Exception, ex:
-            logging.error("Exception occurred while getting active users for device %s.  Exception: %s" % (self.device_name, str(ex)))
-
-        return
-
-    def get_service_from_url(self, in_url, domain):
-        tran_req_url_port = None
-        tran_req_url_uri = None
-        service_obj = None
-        if in_url is not None:
-            #logging.debug("In URL %s" % str(in_url))
-            first_c = in_url.find("://")
-            port_start_pos = in_url.find(":", first_c + 1)
-            if port_start_pos > 0:
-                port_end_pos = in_url.find("/", port_start_pos)
-
-                if port_end_pos > 0:
-                    tran_req_url_port = in_url[port_start_pos + 1:port_end_pos]
-                    url_parms_start = in_url.find("?", port_end_pos)
-                    if url_parms_start > 0:
-                        tran_req_url_uri = in_url[port_end_pos:url_parms_start]
-                    else:
-                        tran_req_url_uri = in_url[port_end_pos:]
-            else:
-                tran_req_url_port = "0"
-                first_s = in_url.find("/", first_c + 4)
-                if first_s > 0:
-                    url_parms_start = in_url.find("?", first_s)
-                    if url_parms_start > 0:
-                        tran_req_url_uri = in_url[first_s:url_parms_start]
-                    else:
-                        tran_req_url_uri = in_url[first_s:]
-
-            #logging.debug("Tran port %s and uri %s " % (tran_req_url_port, tran_req_url_uri))
-            if tran_req_url_port is not None and tran_req_url_uri is not None:
-                #logging.debug("Looking up %s and uri %s " % (tran_req_url_port, tran_req_url_uri))
-                if domain_wsm_op_dict.has_key(domain):
-                    if domain_wsm_op_dict[domain].has_key((tran_req_url_port, tran_req_url_uri.strip())):
-                        service_obj = domain_wsm_op_dict[domain][(tran_req_url_port, tran_req_url_uri.strip())]
-
-        return service_obj
-
-    def get_status(self, domain, status_class, include_domain=False, field_prefix=None, check_interval=None):
-
-        if check_interval is not None:
-            if self.check_interval_dict.has_key((self.device_name, domain, status_class)):
-                if (self.last_run_time - self.check_interval_dict[(self.device_name, domain, status_class)])  < check_interval:
-                    #logging.debug("Check interval of %i NOT reached(%s). Not Getting %s for device %s and domain %s." % (check_interval, self.last_run_time - self.check_interval_dict[(self.device_name, domain, status_class)], status_class, self.device_name, domain))
-                    return
-                else:
-                    #logging.debug("Check interval for %s of %i for device %s and domain %s reached(%s). Getting" % (status_class, check_interval, self.device_name, domain, self.last_run_time - self.check_interval_dict[(self.device_name, domain, status_class)]))
-                    self.check_interval_dict[(self.device_name, domain, status_class)] = self.last_run_time
-            else:
-                self.check_interval_dict[(self.device_name, domain, status_class)] = self.last_run_time
-
-        req = self.get_status_req.format(domain=domain, status_class=status_class)
-
-        resp = self.do_soma_request(req)
-
-        if resp is None:
-            logging.error("Error getting %s for device %s." % (status_class, self.device_name))
-            return
-
-        need_quotes_re = re.compile(r"[^a-zA-Z0-9_\.]+")
-        try:
-            doc = lxml.etree.fromstring(resp)
-            nl = doc.xpath("//%s" % status_class)
-
-            if len(nl) > 0:
-                for dn in nl:
-                    
-                    if status_class == "ObjectStatus":
-                        pass
-#                         logging.debug("In ObjectSTatus");
-# 
-#                         object_class_el = dn.xpath("./Class")
-#                         if object_class_el is not None:
-#                             if len(object_class_el) == 0:
-#                                 logging.error("Error!  Expected 'Class' element for ObjectStatus")
-#                                 continue
-#                             else:
-#                                 object_class = object_class_el[0].text
-#                                 logging.debug("In ObjectSTatus object class is: <"+ object_class + ">");
-#                                 if object_class.count("MultiProtocolGateway") > 0:
-#                                    logging.debug("MPG count ok??")
-#                                 else:
-#                                    logging.debug("MPG count not ok??")
-# 
-#                                 found = False
-#                                 if object_class.count("MultiProtocolGateway") > 0:
-#                                     found = True
-#                                 if object_class.count("XMLFirewallService") >  0: 
-#                                     found = True
-#                                 if object_class.count("WebAppFW") >  0: 
-#                                     found = True
-#                                 if object_class.count("WSGateway") >   0:  
-#                                     found = True
-#                                 if object_class.count("SSL") >  0: 
-#                                     found = True
-#                                 if object_class.count("Crypto") >  0: 
-#                                     found = True
-#                                 if object_class.count("SourceProtocolHandler") > 0:     
-#                                     found = True
-#                                 
-#                                 if not found:
-#                                     logging.debug("class " + object_class + " NOT in list!")
-#                                     continue
-#                                 else:
-#                                     logging.debug("class " + object_class + " IN list! Yippee!")
-#                                 
-#                         else:
-#                             logging.error("Error!  Expected 'Class' element for ObjectStatus")
-                            
-                    if status_class in ["EthernetInterfaceStatus", "EthernetCountersStatus",  "NetworkTransmitPacketThroughput", "NetworkTransmitDataThroughput", "NetworkReceivePacketThroughput", "NetworkReceiveDataThroughput"]:
-                        if self.network_stats_interface_list is not None:
-                            if len(self.network_stats_interface_list) > 0:
-                                int_name = dn.find("Name")
-                                if int_name is None:
-                                    int_name = dn.find("InterfaceName")
-
-                                if int_name is not None:
-                                    if int_name.text is not None:
-                                        if int_name.text.strip() not in self.network_stats_interface_list:
-                                            continue
-
-                    event_text = 'device={dp_name} dp_log_type={log_type} '.format(dp_name=self.device_name, log_type="get_status")
-                    if include_domain:
-                        event_text = event_text + 'domain=%s status_class=%s ' % (domain, status_class)
-                    else:
-                        event_text = event_text + 'status_class=%s ' % (status_class)
-
-
-
-                    if status_class == "WSOperationMetrics":
-                        service_endpoint = dn.find("ServiceEndpoint")
-                        if service_endpoint is not None:
-                            service = self.get_service_from_url(service_endpoint.text, domain)
-
-                            if service is not None:
-                                event_text = event_text + 'service="%s" ' % (service)
-
-                    net_int = None
-                    for n in dn:
-                        tag = n.tag
-
-                        if tag == "Domain":
-                            tag = "domain"
-
-                        if field_prefix is not None:
-                            tag = field_prefix + tag
-                        if n.text is None:
-                            event_text = event_text + '%s=%s ' % (tag, '')
-                        else:
-                            n_text = n.text.strip()
-                            need_quotes_m = need_quotes_re.search(n_text)
-                            if need_quotes_m is not None:
-                                event_text = event_text + '%s="%s" ' % (tag, n_text)
-                            else:
-                                event_text = event_text + '%s=%s ' % (tag, n_text)
-
-                    self.log_event(event_text)
-
-            else:
-                pass
-                #logging.debug("No %s results on device %s and domain %s." % (status_class, self.device_name, domain))
-
-        except Exception, ex:
-            logging.error("Exception occurred while %s for device %s and domain %s.  Exception: %s" % (status_class, self.device_name, domain, str(ex)))
-
-        return
 
 class WSMPullPollerThread(threading.Thread):
 
 
     def __init__(self, thread_id, input_name, splunk_host, device_name,
-                 device_host, domain, soma_port, soma_user, soma_user_password, use_wsm, wsm_pull_interval,
+                 device_host, domain, soma_port, soma_user, soma_user_password, wsm_pull_interval,
                  use_wsm_transaction_time, wsm_pull_max_soap_env_size, wsm_pull_max_elements,wsm_pull_use_custom_formatter,
                  wsm_msg_payloads_to_disk, wsm_msg_payloads_folder, wsm_msg_payloads_use_mongodb,
-                 wsm_msg_payloads_mongodb_db_name, wsm_msg_payloads_mongodb_client, wsm_msg_payloads_mongodb_retention, 
-                 wsm_msg_payloads_mongodb_retention_period,
+                 wsm_msg_payloads_mongodb_db_name, wsm_msg_payloads_mongodb_client, wsm_msg_payloads_mongodb_retention, wsm_msg_payloads_mongodb_retention_period,
                  ws_op_dict, **kw):
 
         threading.Thread.__init__(self)
@@ -1679,7 +883,6 @@ class WSMPullPollerThread(threading.Thread):
         self.soma_port = soma_port
         self.soma_user = soma_user
         self.soma_user_password = soma_user_password
-        self.use_wsm = use_wsm
         self.wsm_pull_interval = wsm_pull_interval
         self.use_wsm_transaction_time = use_wsm_transaction_time
         self.wsm_pull_max_soap_env_size = wsm_pull_max_soap_env_size
@@ -1886,6 +1089,8 @@ class WSMPullPollerThread(threading.Thread):
 
 
     def log_event(self, event_text, wsm_tran_time=None):
+        """
+        """
 
         index_time = "[" + datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + " " + time.strftime("%z") + "]"
         #logging.debug("Log event - self.use_wsm_transaction_time: " + str(self.use_wsm_transaction_time))
@@ -1974,7 +1179,7 @@ class WSMPullPollerThread(threading.Thread):
                         self.current_collection = "%s.%s" % (self.current_date, self.domain)
                         # create index on starttimeutc
                         self.wsm_msg_payloads_mongodb_db[self.current_collection].create_index("starttimeutc")
-                        
+                        #logging.debug("WSM pull in run() - Date changed. DB changed OK.")
                         if self.wsm_msg_payloads_mongodb_retention:
                             delete_date = datetime.datetime.strptime(self.current_date, "%Y%m%d") - datetime.timedelta(days=self.wsm_msg_payloads_mongodb_retention_period)
                             
@@ -1984,8 +1189,6 @@ class WSMPullPollerThread(threading.Thread):
                             except Exception, ex:
                                 logging.error("Exception occurred while deleting collection.  Collection: %s Exception: %s" % (delete_collection, str(ex)))
 
-                        #logging.debug("WSM pull in run() - Date changed. DB changed OK.")
-
                     if self.wsm_msg_payloads_to_disk:
                         try:
                             self.current_folder = os.path.join(self.wsm_msg_payloads_folder, self.current_date)
@@ -1994,11 +1197,12 @@ class WSMPullPollerThread(threading.Thread):
                         except Exception, ex:
                             logging.error("Exception occurred while create new folder. Exception: %s" % str(ex))
 
-                
+
                 if self.subscribed == True:
                     while self.pull_request():
                         #logging.debug("PUll request Ok.")
-                        time.sleep(0.01)
+                        time.sleep(0.1)
+
                     #logging.debug("PUll request failed.")
 
 
@@ -2314,7 +1518,7 @@ class WSMPullPollerThread(threading.Thread):
                                     if self.wsm_msg_payloads_use_mongodb > 0:
                                         new_db_obj = db_obj.copy()
                                         new_db_obj["payload_type"] = "response"
-                                        new_db_obj["payload"] = response_message #.replace("\n", "")
+                                        new_db_obj["payload"] = response_message#.replace("\n", "")
                                         #new_db_obj_lst.append(new_db_obj)
 
                                         ins_id = self.wsm_msg_payloads_mongodb_db[self.current_collection].insert_one(new_db_obj).inserted_id
@@ -2351,7 +1555,7 @@ class WSMPullPollerThread(threading.Thread):
                                     if self.wsm_msg_payloads_use_mongodb > 0:
                                         new_db_obj = db_obj.copy()
                                         new_db_obj["payload_type"] = "backend_request"
-                                        new_db_obj["payload"] = be_request_message #.replace("\n", "")
+                                        new_db_obj["payload"] = be_request_message#.replace("\n", "")
                                         #new_db_obj_lst.append(new_db_obj)
 
                                         ins_id = self.wsm_msg_payloads_mongodb_db[self.current_collection].insert_one(new_db_obj).inserted_id
@@ -2389,7 +1593,7 @@ class WSMPullPollerThread(threading.Thread):
                                     if self.wsm_msg_payloads_use_mongodb > 0:
                                         new_db_obj = db_obj.copy()
                                         new_db_obj["payload_type"] = "backend_response"
-                                        new_db_obj["payload"] = be_response_message# .replace("\n", "")
+                                        new_db_obj["payload"] = be_response_message#.replace("\n", "")
                                         #new_db_obj_lst.append(new_db_obj)
 
                                         ins_id = self.wsm_msg_payloads_mongodb_db[self.current_collection].insert_one(new_db_obj).inserted_id
@@ -2835,7 +2039,9 @@ class WSMPullPollerThread(threading.Thread):
 class WSMPushServerThread(threading.Thread):
 
     class WSMPushRestService(object):
-        def __init__(self, device_name, domain_sub_list, use_wsm_transaction_time, current_collection, wsm_msg_payloads_to_disk, wsm_msg_payloads_folder, wsm_msg_payloads_use_mongodb=False, wsm_msg_payloads_mongodb_db=None):
+        def __init__(self, device_name, domain_sub_list, use_wsm_transaction_time, 
+                     current_collection, wsm_msg_payloads_to_disk, wsm_msg_payloads_folder, 
+                     wsm_msg_payloads_use_mongodb=False, wsm_msg_payloads_mongodb_db=None):
 
             self.device_name = device_name
             self.db_name = os.path.basename(wsm_msg_payloads_folder)
@@ -2964,13 +2170,16 @@ class WSMPushServerThread(threading.Thread):
                                             msg_comp = base64.encodestring(zlib.compress(lxml.etree.tostring(fs_req_msg[0]),9))
                                             ins_id = None
                                             if self.wsm_msg_payloads_use_mongodb > 0:
-                                                new_db_obj = db_obj.copy()
-                                                new_db_obj["payload_type"] = "request"
-                                                new_db_obj["payload"] = msg_comp.replace("\n", "")
-                                                #new_db_obj_lst.append(new_db_obj)
-    
-                                                ins_id = self.wsm_msg_payloads_mongodb_db[self.current_collection].insert_one(new_db_obj).inserted_id
-                                                ins_id = str(ins_id)
+                                                if self.current_collection is not None:
+                                                    new_db_obj = db_obj.copy()
+                                                    new_db_obj["payload_type"] = "request"
+                                                    new_db_obj["payload"] = msg_comp.replace("\n", "")
+                                                    #new_db_obj_lst.append(new_db_obj)
+        
+                                                    ins_id = self.wsm_msg_payloads_mongodb_db[self.current_collection].insert_one(new_db_obj).inserted_id
+                                                    ins_id = str(ins_id)
+                                                else:
+                                                    logging.error("Collection is null. Not updating payloads.")
                                                 #logging.debug("Tid: %s request_message Inserted: %s " %(tid, ins_id))
     
                                             if self.wsm_msg_payloads_to_disk > 0:
@@ -2995,13 +2204,15 @@ class WSMPushServerThread(threading.Thread):
                                             msg_comp = base64.encodestring(zlib.compress(lxml.etree.tostring(fs_resp_msg[0]),9))
                                             ins_id = None
                                             if self.wsm_msg_payloads_use_mongodb > 0:
-                                                new_db_obj = db_obj.copy()
-                                                new_db_obj["payload_type"] = "response"
-                                                new_db_obj["payload"] = msg_comp.replace("\n", "")
-                                                new_db_obj_lst.append(new_db_obj)
-    
-                                                ins_id = self.wsm_msg_payloads_mongodb_db[self.current_collection].insert_one(new_db_obj).inserted_id
-                                                ins_id = str(ins_id)
+                                                if self.current_collection is not None:
+                                                    new_db_obj = db_obj.copy()
+                                                    new_db_obj["payload_type"] = "response"
+                                                    new_db_obj["payload"] = msg_comp.replace("\n", "")
+                                                    new_db_obj_lst.append(new_db_obj)
+                                                    ins_id = self.wsm_msg_payloads_mongodb_db[self.current_collection].insert_one(new_db_obj).inserted_id
+                                                    ins_id = str(ins_id)
+                                                else:
+                                                    logging.error("Collection is null. Not updating payloads.")
                                                 #logging.debug("Tid: %s response_message Inserted: %s " %(tid, ins_id))
     
                                             if self.wsm_msg_payloads_to_disk > 0:
@@ -3027,16 +2238,18 @@ class WSMPushServerThread(threading.Thread):
                                             msg_comp = base64.encodestring(zlib.compress(lxml.etree.tostring(bs_req_msg[0]),9))
                                             ins_id = None
                                             if self.wsm_msg_payloads_use_mongodb > 0:
-    
-                                                new_db_obj = db_obj.copy()
-                                                new_db_obj["payload_type"] = "backend_request"
-                                                new_db_obj["payload"] = msg_comp.replace("\n", "")
-                                                new_db_obj_lst.append(new_db_obj)
-    
-                                                ins_id = self.wsm_msg_payloads_mongodb_db[self.current_collection].insert_one(new_db_obj).inserted_id
-                                                ins_id = str(ins_id)
-                                                #logging.debug("Tid: %s be_request_message Inserted: %s " %(tid, ins_id))
-    
+                                                if self.current_collection is not None:
+                                                    new_db_obj = db_obj.copy()
+                                                    new_db_obj["payload_type"] = "backend_request"
+                                                    new_db_obj["payload"] = msg_comp.replace("\n", "")
+                                                    new_db_obj_lst.append(new_db_obj)
+        
+                                                    ins_id = self.wsm_msg_payloads_mongodb_db[self.current_collection].insert_one(new_db_obj).inserted_id
+                                                    ins_id = str(ins_id)
+                                                    #logging.debug("Tid: %s be_request_message Inserted: %s " %(tid, ins_id))
+                                                else:
+                                                    logging.error("Collection is null. Not updating payloads.")
+                                                    
                                             if self.wsm_msg_payloads_to_disk > 0:
                                                 if self.ins_id is None:
                                                     ins_id = uuid.uuid4()
@@ -3059,12 +2272,16 @@ class WSMPushServerThread(threading.Thread):
                                             msg_comp = base64.encodestring(zlib.compress(lxml.etree.tostring(bs_resp_msg[0]),9))
                                             ins_id = None
                                             if self.wsm_msg_payloads_use_mongodb > 0:
-                                                new_db_obj = db_obj.copy()
-                                                new_db_obj["payload_type"] = "backend_response"
-                                                new_db_obj["payload"] = msg_comp.replace("\n", "")
-                                                #new_db_obj_lst.append(new_db_obj)
-                                                ins_id = self.wsm_msg_payloads_mongodb_db[self.current_collection].insert_one(new_db_obj).inserted_id
-                                                ins_id = str(ins_id)
+                                                if self.current_collection is not None:
+                                                    new_db_obj = db_obj.copy()
+                                                    new_db_obj["payload_type"] = "backend_response"
+                                                    new_db_obj["payload"] = msg_comp.replace("\n", "")
+                                                    #new_db_obj_lst.append(new_db_obj)
+                                                    ins_id = self.wsm_msg_payloads_mongodb_db[self.current_collection].insert_one(new_db_obj).inserted_id
+                                                    ins_id = str(ins_id)
+                                                else:
+                                                    logging.error("Collection is null. Not updating payloads.")
+                                                    
                                                 #logging.debug("Tid: %s be_response_message Inserted: %s " %(tid, ins_id))
     
                                             if self.wsm_msg_payloads_to_disk > 0:
@@ -3220,7 +2437,6 @@ class WSMPushServerThread(threading.Thread):
 
                 self.process_wsm_events(push_req)
 
-                
             except Exception, ex:
                 logging.error("******** Exception occurred in WSM Push thread! Exception:" + str(ex))
 
@@ -3251,6 +2467,8 @@ class WSMPushServerThread(threading.Thread):
         self.setName(thread_id)
         self.thread_id = thread_id
         self.thread_name = thread_name
+        
+        self.domain = thread_name
         self.input_name = input_name
         self.splunk_host = splunk_host
         self.device_name = device_name
@@ -3284,19 +2502,9 @@ class WSMPushServerThread(threading.Thread):
         self.session.auth = (self.soma_user, self.soma_user_password)
         self.session.verify = False
 
-        self.cherry_py_conf = {
-        '/': {
-            'request.dispatch': cherrypy.dispatch.MethodDispatcher(),
-            'tools.sessions.on': True,
-            'tools.response_headers.on': True,
-            'tools.response_headers.headers': [('Content-Type', 'text/plain')],
-            }
-        }
-
-       
-
         self.current_date =  datetime.datetime.now().strftime("%Y%m%d")
         self.current_folder = os.path.join(wsm_msg_payloads_folder, self.current_date)
+        self.current_collection = None
         
         if self.wsm_msg_payloads_to_disk:
             try:
@@ -3305,7 +2513,14 @@ class WSMPushServerThread(threading.Thread):
                 pass    
         
         
-
+        self.cherry_py_conf = {
+            '/': {
+                'request.dispatch': cherrypy.dispatch.MethodDispatcher(),
+                'tools.sessions.on': True,
+                'tools.response_headers.on': True,
+                'tools.response_headers.headers': [('Content-Type', 'text/plain')],
+                }
+        }
 
     wsm_push_subscription_req = """<env:Envelope xmlns:wsman="http://schemas.xmlsoap.org/ws/2005/02/management" xmlns:wse="http://schemas.xmlsoap.org/ws/2004/08/eventing" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:env="http://www.w3.org/2003/05/soap-envelope" xmlns:dpg="http://datapower-modular-input.jjjw420.github.com">
    <env:Header>
@@ -3532,7 +2747,7 @@ class WSMPushServerThread(threading.Thread):
         cherrypy.config.update({'server.socket_host': '0.0.0.0',
                                 'server.socket_port': self.wsm_push_server_port})
         #cherrypy.quickstart(self.WSMPushRestService(self.device_name, self.domain_sub_list, self.use_wsm_transaction_time, self.wsm_msg_payloads_to_disk, self.current_cdb_folder, self.wsm_msg_payloads_use_mongodb, self.cdb_db), '/', self.cherry_py_conf)
-        wsmp = self.WSMPushRestService(self.device_name, self.domain_sub_list, self.use_wsm_transaction_time, self.wsm_msg_payloads_to_disk, self.current_folder, self.wsm_msg_payloads_use_mongodb, self.wsm_msg_payloads_mongodb_db)
+        wsmp = self.WSMPushRestService(self.device_name, self.domain_sub_list, self.use_wsm_transaction_time, self.current_collection, self.wsm_msg_payloads_to_disk, self.current_folder, self.wsm_msg_payloads_use_mongodb, self.wsm_msg_payloads_mongodb_db)
         cherrypy.tree.mount(wsmp, '/', self.cherry_py_conf)
         cherrypy.engine.signal_handler.subscribe()
         cherrypy.engine.start()
@@ -3552,15 +2767,17 @@ class WSMPushServerThread(threading.Thread):
                         if self.domain_sub_dict.has_key(domain):
                             enumeration_context = self.domain_sub_dict[domain]
                             self.unsubscribe_push_subscription(domain, enumeration_context)
-                    
-                    cherrypy.engine.exit()
+                    try:
+                        cherrypy.engine.exit()
+                    except:
+                        pass
 
                     return
                 else:
                     logging.debug("********% WS-M Not stopping...")
                     pass
 
-                if (time.time() - sub_time) > 480:
+                if (time.time() - sub_time) > 600:
                     logging.debug("******** Over 480 seconds.  Renewing.")
                     for domain in self.domain_list:
                         enumeration_context = ""
@@ -3614,9 +2831,13 @@ class WSMPushServerThread(threading.Thread):
             except Exception, ex:
                 logging.error("******** Exception occurred in WS-M Push thread.  Stopping. Exception:" + str(ex))
                 done = True
+                try:
+                    cherrypy.engine.exit()
+                except:
+                    pass
                 self.exit()
 
-            time.sleep(60)
+            time.sleep(30)
 
 # prints validation error data to be consumed by Splunk
 def print_validation_error(s):

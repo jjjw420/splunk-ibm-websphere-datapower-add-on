@@ -1,3 +1,16 @@
+'''
+IBM Websphere Datapower Modular Input for Splunk
+Hannes Wagener - 2016
+
+
+DISCLAIMER
+You are free to use this code in any way you like, subject to the
+Python & IBM disclaimers & copyrights. I make no representations
+about the suitability of this software for any purpose. It is
+provided "AS-IS" without warranty of any kind, either express or
+implied.
+
+'''
 import random
 import binascii
 import string
@@ -19,8 +32,8 @@ import gzip
 
 MONGODB_HOST = "127.0.0.1"
 #MONGODB_HOST = "10.4.145.187"
-MONGODB_PORT = 27017
-MONGODB_DB_NAME = "dptrans"
+MONGODB_PORT = 27018
+MONGODB_DB_NAME = "dpwsm"
 MONGODB_USER = "splunk"
 MONGODB_PASSWORD = "splunk"
 MONGODB_AUTH_DB = "admin"
@@ -36,7 +49,7 @@ if MONGODB_USE_AUTH:
 dev_devices = ["esbdpd01", "esbedpu01"]
 sit1_devices = ["esbdpu01", "esbdpu02", "esbedpu01"]
 sit2_devices = ["esbdps01", "esbdps02", "esbedpu01"]
-prod_devices = ["esbdpp01", "esbdpp02", "esbdpp03", "esbdpp04", "esbdpp06", "esbdpp08", "esbedpp01", "esbedpp02", "esbedpp03", "esbedpp04"]
+prod_devices = ["esbdpp01", "esbdpp02", "esbdpp03", "esbdpp04", "esbdpp05", "esbdpp06", "esbdpp08", "esbdpp10", "esbdpp12", "esbedpp01", "esbedpp02", "esbedpp03", "esbedpp04"]
 
 
 class WSMPayloadServer(object):
@@ -133,7 +146,7 @@ class WSMPayloadServer(object):
 
     @cherrypy.expose
     def getcollections(self, domain=None, capturedate=None):
-
+        cherrypy.response.headers['Content-type'] = "text/plain";
         colls = mongodb_db.collection_names()
         new_colls = []
         if domain is not None:

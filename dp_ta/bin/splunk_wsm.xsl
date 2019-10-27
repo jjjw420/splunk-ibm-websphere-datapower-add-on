@@ -2,8 +2,14 @@
 <!--
  * Name:           splunk_wsm.xsl
  * Description:    Implementation of transaction accounting message formats
-                   specific to Splunk for use in Splunk Dashboards and payload logging.
- * Author:         Martin Legend Pieterse
+                   specific for easy splunk indexing.
+ * Author:         Martin Legend Pieterse/ Hannes Wagener 
+
+ * Disclaimer:     You are free to use this code in any way you like, subject to the
+                   Python & IBM disclaimers & copyrights. I make no representations
+                   about the suitability of this software for any purpose. It is
+                   provided "AS-IS" without warranty of any kind, either express or
+                   implied.
 -->
 
 <xsl:stylesheet version="1.0"
