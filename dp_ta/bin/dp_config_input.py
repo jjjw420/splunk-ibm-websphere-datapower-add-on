@@ -1,5 +1,17 @@
 #!/opt/splunk/bin/python
+'''
+IBM Websphere Datapower Modular Input for Splunk
+Hannes Wagener - 2016
 
+
+DISCLAIMER
+You are free to use this code in any way you like, subject to the
+Python & IBM disclaimers & copyrights. I make no representations
+about the suitability of this software for any purpose. It is
+provided "AS-IS" without warranty of any kind, either express or
+implied.
+
+'''
 import lxml.etree
 import json
 import argparse
@@ -16,8 +28,6 @@ import shutil
 
 HOST = "localhost"
 PORT = 8089
-# USERNAME = "admin"
-# PASSWORD = "RpHvRb10201"
 
 index_name = "esb_dp_config"
 domain = None

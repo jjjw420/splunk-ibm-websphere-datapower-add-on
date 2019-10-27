@@ -31,11 +31,12 @@ The "dpconfig" search command can be used to display the search results or to fo
 
 ## Troubleshooting
 
-## Conversion to the IBM Datapower REST interface.  
+## Conversion to the IBM Datapower REST interface and Python3 support.  
 Currently the XML Management (SOMA) interface is used to query the information from Datapower as that was the only option at the time of writing this add on.   A REST intereface is now available on Datapower and if used can make the add-on more light weight and will allow the Spluk event to be logged as a JSON response or in the current key-value pair output using the XML interface.  
 
 Conversion to the REST interface has started.
 
+Splunk will be using Python 3 from early 2020.  Conversion to support Python3 has started.
 
 ## DISCLAIMER
 You are free to use this code in any way you like, subject to the Python & IBM disclaimers & copyrights. I make no representations about the suitability of this software for any purpose. It is provided "AS-IS" without warranty of any kind, either express or implied. 
