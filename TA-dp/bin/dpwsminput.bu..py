@@ -12,6 +12,8 @@ provided "AS-IS" without warranty of any kind, eithersoma_url express or
 implied.
 
 '''
+from __future__ import print_function
+
 import requests
 import os
 import lxml.etree
@@ -24,7 +26,6 @@ import threading
 import uuid
 import cgi
 import datetime
-import cherrypy
 import base64
 import zlib
 import re
@@ -36,10 +37,10 @@ except:
 
 SPLUNK_HOME = os.environ.get("SPLUNK_HOME")
 MONGODB_AUTH_DB = "admin"
-# Initialize the root logger with a StreamHandler and a format message:
+# Initialize the root logging with a StreamHandler and a format message:
 logging.basicConfig(level=logging.DEBUG, format='%(levelname)s %(message)s')
-logging.getLogger("requests").setLevel(logging.WARNING)
-logging.getLogger("urllib3").setLevel(logging.WARNING)
+logging.getlogging("requests").setLevel(logging.WARNING)
+logging.getlogging("urllib3").setLevel(logging.WARNING)
 
 SCHEME = """<scheme>
     <title>IBM Websphere Datapower WS-M</title>
@@ -209,6 +210,12 @@ SCHEME = """<scheme>
                 <required_on_create>false</required_on_create>
             </arg>
 
+            <arg name="wsm_msg_payloads_to_splunk">
+                <title>Write WS-M message payloads to Splunk</title>
+                <description>Write WS-M message payloads to Splunk.</description>
+                <required_on_edit>false</required_on_edit>
+                <required_on_create>false</required_on_create>
+            </arg>
 
             <arg name="wsm_msg_payloads_to_disk">
                 <title>Write WS-M message payloads to disk instead of indexing in Splunk</title>
@@ -372,7 +379,7 @@ def get_domains(soma_session, device_host, soma_port, soma_user, soma_user_passw
             for d in d_nl:
                 domain_list.append(d.text)
 
-    except Exception, ex:
+    except Exception as ex:
         logging.error("Exception occurred while getting domains. Exception: " + str(ex))
 
     return domain_list
@@ -412,7 +419,7 @@ def get_ws_operations_status(soma_session, device_host, domain, soma_port, soma_
             pass
             #logging.debug("No WSOperationsStatus resultS??")
 
-    except Exception, ex:
+    except Exception as ex:
         logging.error("Exception occurred while getting domains. Exception: " + str(ex))
 
     return ws_op_dict
@@ -452,7 +459,7 @@ def get_eth_ints_with_ips(soma_session, device_host, domain, soma_port, soma_use
         else:
             logging.error("No IPAddressStatus results?")
 
-    except Exception, ex:
+    except Exception as ex:
         logging.error("Exception occurred while getting domains. Exception: " + str(ex))
 
     return network_stats_interface_list
@@ -497,7 +504,7 @@ def save_config(soma_session, device_host, soma_port, soma_user, soma_user_passw
         else:
             logging.error("Could not find dp:result tag??")
             return False
-    except Exception, ex:
+    except Exception as ex:
         logging.error("Exception occured while saving config for host %s and domain %s.  Exception: %s" % (device_host, domain, str(ex)))
         return False
 
@@ -549,7 +556,7 @@ def get_config_enabled(soma_session, device_host, soma_port, soma_user, soma_use
         else:
             logging.error("Could not find %s tag??" % config_class)
             return False
-    except Exception, ex:
+    except Exception as ex:
         logging.error("Exception occurred while getting %s for host %s and domain %s.  Exception: %s" % (config_class, device_host, domain, str(ex)))
         return False
 
@@ -599,7 +606,7 @@ def enable_statistics_domain(soma_session, device_host, soma_port, soma_user, so
         else:
             logging.error("Could not find dp:result tag??")
             return False
-    except Exception, ex:
+    except Exception as ex:
         logging.error("Exception occurred while enableling statistics for host %s and domain %s.  Exception: %s" % (device_host, domain, str(ex)))
         return False
 
@@ -655,7 +662,7 @@ def enable_wsm_domain(soma_session, device_host, soma_port, soma_user, soma_user
         else:
             logging.error("Could not find dp:result tag??")
             return False
-    except Exception, ex:
+    except Exception as ex:
         logging.error("Exception occurred while enableling ws-m for host %s and domain %s.  Exception: %s" % (device_host, domain, str(ex)))
         return False
 
@@ -718,7 +725,7 @@ def do_run():
     ws_op_dict = {}
     
     if wsm_domains is not None:
-        wsm_domain_list = map(str,wsm_domains.split(","))
+        wsm_domain_list = list(map(str,wsm_domains.split(",")))
         wsm_domain_list = [x.strip(' ') for x in wsm_domain_list]
 
     try:
@@ -855,7 +862,7 @@ def do_run():
                     wsm_pull_threads.append(WSMPullPollerThread(thread_id, input_name, splunk_host, device_name, device_host, domain, soma_port, soma_user, soma_user_password, wsm_pull_interval, use_wsm_transaction_time, wsm_pull_max_soap_env_size, wsm_pull_max_elements, wsm_pull_use_custom_formatter, wsm_msg_payloads_to_disk, wsm_msg_payloads_folder, wsm_msg_payloads_use_mongodb, wsm_msg_payloads_mongodb_db_name, wsm_msg_payloads_mongodb_client, wsm_msg_payloads_mongodb_retention, wsm_msg_payloads_mongodb_retention_period, ws_op_dict))
                     wsm_pull_threads[-1].start()
 
-    except Exception, ex:
+    except Exception as ex:
         logging.error("Unhandled Exception occurred in doRun. Exception:" + str(ex))
 
 
@@ -966,7 +973,7 @@ class WSMPullPollerThread(threading.Thread):
                 else:
                     logging.error("Error while doing pull subscription.  No EnumerationContext?? Response: %s" % str(r.content))
 
-        except Exception, ex:
+        except Exception as ex:
             logging.error("Exception while doing pull subscription.  Exception: %s" % str(ex))
 
         self.subscribed = False
@@ -1028,7 +1035,7 @@ class WSMPullPollerThread(threading.Thread):
                     else:
                         logging.error("Error while doing pull renew.  Response: %s" % str(r.content))
 
-        except Exception, ex:
+        except Exception as ex:
             logging.error("Exception while doing renew subscription.  Exception: %s" % str(ex))
             rc = 8
             self.subscribed = False
@@ -1081,7 +1088,7 @@ class WSMPullPollerThread(threading.Thread):
                 else:
                     logging.error("HTTP 200 but no soap body?")
 
-        except Exception, ex:
+        except Exception as ex:
             logging.error("Exception while doing pull unsubscription.  Exception: %s" % str(ex))
 
         return rc
@@ -1102,7 +1109,7 @@ class WSMPullPollerThread(threading.Thread):
                 wsm_index_time = "[" +  datetime.datetime.fromtimestamp(wsm_tran_time).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + " " + time.strftime("%z") + "]"
                 index_time = wsm_index_time
                 #logging.error("index time is: " + index_time)
-            except Exception, ex:
+            except Exception as ex:
                 logging.error("HUH?  Could not parse wsm-tran time.  Exception:" + str(ex))
                 pass
 
@@ -1111,7 +1118,7 @@ class WSMPullPollerThread(threading.Thread):
         #logging.debug("Logged event: %s " % splunk_event)
 
     def print_xml_single_instance_mode(self, host, event):
-        print "<stream><event><data>%s</data><host>%s</host></event></stream>" % (cgi.escape(event), host)
+        print("<stream><event><data>%s</data><host>%s</host></event></stream>" % (cgi.escape(event), host))
 
     def run(self):
 
@@ -1133,7 +1140,7 @@ class WSMPullPollerThread(threading.Thread):
                         else:
                             #logging.debug("Unsubscribe OK?")
                             pass
-                    except Exception, ex:
+                    except Exception as ex:
                         pass
 
                     done = True
@@ -1186,7 +1193,7 @@ class WSMPullPollerThread(threading.Thread):
                             delete_collection = "%s.%s" % (delete_date.strftime("%Y%m%d"), self.domain)
                             try:
                                 self.wsm_msg_payloads_mongodb_db.drop_collection(delete_collection)
-                            except Exception, ex:
+                            except Exception as ex:
                                 logging.error("Exception occurred while deleting collection.  Collection: %s Exception: %s" % (delete_collection, str(ex)))
 
                     if self.wsm_msg_payloads_to_disk:
@@ -1194,7 +1201,7 @@ class WSMPullPollerThread(threading.Thread):
                             self.current_folder = os.path.join(self.wsm_msg_payloads_folder, self.current_date)
                             os.makedirs(os.path.join(self.current_folder, self.domain))
 
-                        except Exception, ex:
+                        except Exception as ex:
                             logging.error("Exception occurred while create new folder. Exception: %s" % str(ex))
 
 
@@ -1206,7 +1213,7 @@ class WSMPullPollerThread(threading.Thread):
                     #logging.debug("PUll request failed.")
 
 
-            except Exception, ex:
+            except Exception as ex:
                 logging.error("Exception in WS-M pull thread.  Exception: %s" % (str(ex)))
 
             time.sleep(self.wsm_pull_interval)
@@ -1268,7 +1275,7 @@ class WSMPullPollerThread(threading.Thread):
                         logging.error("No PullResponse?" + r.content)
 
 
-        except Exception, ex:
+        except Exception as ex:
             logging.error("Exception while doing pull subscription.  Exception: %s" % str(ex))
 
         return False
@@ -1304,8 +1311,8 @@ class WSMPullPollerThread(threading.Thread):
             #logging.debug("Tran port %s and uri %s " % (tran_req_url_port, tran_req_url_uri))
             if tran_req_url_port is not None and tran_req_url_uri is not None:
                 #logging.debug("Looking up %s and uri %s " % (tran_req_url_port, tran_req_url_uri))
-                if domain_wsm_op_dict.has_key(domain):
-                    if domain_wsm_op_dict[domain].has_key((tran_req_url_port, tran_req_url_uri.strip())):
+                if domain in domain_wsm_op_dict:
+                    if (tran_req_url_port, tran_req_url_uri.strip()) in domain_wsm_op_dict[domain]:
                         service_obj = domain_wsm_op_dict[domain][(tran_req_url_port, tran_req_url_uri.strip())]
 
         return service_obj
@@ -1408,7 +1415,7 @@ class WSMPullPollerThread(threading.Thread):
                             if s_pos > 0:
                                 ws_operation = ws_operation[s_pos + 1:]
                         else:
-                            logger.error("Expected ws_operation field but not found? Will try to get service anyway.")
+                            logging.error("Expected ws_operation field but not found? Will try to get service anyway.")
                             service_obj = self.get_service_from_url(request_url, self.domain)
                             if service_obj is None:
                                 service_obj = "Unknown"
@@ -1494,8 +1501,8 @@ class WSMPullPollerThread(threading.Thread):
                                         msg_file = open(os.path.join(self.current_folder, domain, "%s_%s.dat" % (tran_id, ins_id)), "wb")
                                         msg_file.write(request_message)
                                         msg_file.close()
-                                except Exception, ex:
-                                    logger.error("Exception occured while writing request message.  Exception:" + str(ex))
+                                except Exception as ex:
+                                    logging.error("Exception occured while writing request message.  Exception:" + str(ex))
                                 request_message_id = ins_id
                                 #logging.debug("request_message_id:" + str(request_message_id))
 
@@ -1532,8 +1539,8 @@ class WSMPullPollerThread(threading.Thread):
                                         msg_file = open(os.path.join(self.current_folder, domain, "%s_%s.dat" % (tran_id, ins_id)), "wb")
                                         msg_file.write(response_message)
                                         msg_file.close()
-                                except Exception, ex:
-                                    logger.error("Exception occured while writing response message.  Exception:" + str(ex))
+                                except Exception as ex:
+                                    logging.error("Exception occured while writing response message.  Exception:" + str(ex))
                                 response_message_id = ins_id
                                 #logging.debug("response_message_id:" + str(response_message_id))
                             else:
@@ -1569,8 +1576,8 @@ class WSMPullPollerThread(threading.Thread):
                                         msg_file = open(os.path.join(self.current_folder, domain, "%s_%s.dat" % (tran_id, ins_id)), "wb")
                                         msg_file.write(be_request_message)
                                         msg_file.close()
-                                except Exception, ex:
-                                    logger.error("Exception occured while writing be_request message.  Exception:" + str(ex))
+                                except Exception as ex:
+                                    logging.error("Exception occured while writing be_request message.  Exception:" + str(ex))
                                 be_request_message_id = ins_id
                                 #logging.debug("be_request_message_id:" + str(be_request_message_id))
 
@@ -1607,8 +1614,8 @@ class WSMPullPollerThread(threading.Thread):
                                         msg_file = open(os.path.join(self.current_folder, domain, "%s_%s.dat" % (tran_id, ins_id)), "wb")
                                         msg_file.write(be_response_message)
                                         msg_file.close()
-                                except Exception, ex:
-                                    logger.error("Exception occured while writing be_response message.  Exception:" + str(ex))
+                                except Exception as ex:
+                                    logging.error("Exception occured while writing be_response message.  Exception:" + str(ex))
                                 be_response_message_id = ins_id
                                 #logging.debug("be_response_message_id:" + str(be_response_message_id))
                             else:
@@ -1698,7 +1705,7 @@ class WSMPullPollerThread(threading.Thread):
                     all_done = True
                     #logging.debug("No mpore transaction tags to process.")
 
-        except Exception, ex:
+        except Exception as ex:
             logging.error("Exception while processing formatted WSM events. Exception: " + str(ex))
 
 
@@ -1787,8 +1794,8 @@ class WSMPullPollerThread(threading.Thread):
                                         #logging.debug("Tran port %s and uri %s " % (tran_req_url_port, tran_req_url_uri))
                                         if tran_req_url_port != "" and tran_req_url_uri != "":
                                             #logging.debug("str(self.ws_op_dict) = " + str(self.ws_op_dict))
-                                            if domain_wsm_op_dict.has_key(domain):
-                                                if domain_wsm_op_dict[domain].has_key((tran_req_url_port, tran_req_url_uri.strip())):
+                                            if domain in domain_wsm_op_dict:
+                                                if (tran_req_url_port, tran_req_url_uri.strip()) in domain_wsm_op_dict[domain]:
                                                     service_obj = domain_wsm_op_dict[domain][(tran_req_url_port, tran_req_url_uri.strip())]
                                             else:
                                                 logging.debug("Huh?  both uri and port nothoing?")
@@ -1834,7 +1841,7 @@ class WSMPullPollerThread(threading.Thread):
                                         fs_req_msg.remove(fs_req_msg[0])
                                         fs_req_msg.text = ins_id
 
-                                    except Exception, ex:
+                                    except Exception as ex:
                                         logging.error("Exception occurred while inserting or writing FS Request message! Ex:" + str(ex))
 
 
@@ -1866,7 +1873,7 @@ class WSMPullPollerThread(threading.Thread):
                                         fs_resp_msg.text = ins_id
 
 
-                                    except Exception, ex:
+                                    except Exception as ex:
                                         logging.error( "Exception occurred while inserting or writing FS Response message:" + str(ex))
 
 
@@ -1898,7 +1905,7 @@ class WSMPullPollerThread(threading.Thread):
                                         bs_req_msg.remove(bs_req_msg[0])
                                         bs_req_msg.text = ins_id
 
-                                    except Exception, ex:
+                                    except Exception as ex:
                                         logging.error("Exception occurred while inserting or writing BS Request message" + str(ex))
 
 
@@ -1928,7 +1935,7 @@ class WSMPullPollerThread(threading.Thread):
                                         bs_resp_msg.remove(bs_resp_msg[0])
                                         bs_resp_msg.text = ins_id
 
-                                    except Exception, ex:
+                                    except Exception as ex:
                                         logging.error(" Exception occurred while inserting or writing BS Response message" + str(ex))
                                         pass
 
@@ -1981,7 +1988,7 @@ class WSMPullPollerThread(threading.Thread):
                                         event_text = event_text + '%s=%s ' % (el_tag + "_" + eel_tag, eel_text)
 
                                 if len(eel.attrib) > 0:
-                                    for el_a, el_a_v in eel.attrib.items():
+                                    for el_a, el_a_v in list(eel.attrib.items()):
                                         el_a_v = el_a_v.replace("\n", "")
                                         el_a_v_ns = el_a_v.find("}")
                                         if el_a_v_ns > 0:
@@ -2011,7 +2018,7 @@ class WSMPullPollerThread(threading.Thread):
 
 
                             if len(el.attrib) > 0:
-                                for el_a, el_a_v in el.attrib.items():
+                                for el_a, el_a_v in list(el.attrib.items()):
                                     el_a_v = el_a_v.replace("\n", "")
                                     el_a_v_ns = el_a_v.find("}")
                                     if el_a_v_ns > 0:
@@ -2030,7 +2037,7 @@ class WSMPullPollerThread(threading.Thread):
 
                 return True
 
-        except Exception, ex:
+        except Exception as ex:
             logging.error("Exception occurred in WSM Pull thread! Exception:" + str(ex))
 
         return False
@@ -2143,8 +2150,8 @@ class WSMPushServerThread(threading.Thread):
                                             #logging.debug("Tran port %s and uri %s " % (tran_req_url_port, tran_req_url_uri))
                                             if tran_req_url_port != "" and tran_req_url_uri != "":
                                                 #logging.debug("str(self.ws_op_dict) = " + str(self.ws_op_dict))
-                                                if domain_wsm_op_dict.has_key(domain):
-                                                    if domain_wsm_op_dict[domain].has_key((tran_req_url_port, tran_req_url_uri.strip())):
+                                                if domain in domain_wsm_op_dict:
+                                                    if (tran_req_url_port, tran_req_url_uri.strip()) in domain_wsm_op_dict[domain]:
                                                         service_obj = domain_wsm_op_dict[domain][(tran_req_url_port, tran_req_url_uri.strip())]
                                                 else:
                                                     logging.debug("Huh?  both uri and port nothoing?")
@@ -2193,7 +2200,7 @@ class WSMPushServerThread(threading.Thread):
                                             fs_req_msg.remove(fs_req_msg[0])
                                             fs_req_msg.text = ins_id
     
-                                        except Exception, ex:
+                                        except Exception as ex:
                                             logging.error("Exception occurred while inserting or writing FS Request message! Ex:" + str(ex))
     
     
@@ -2227,7 +2234,7 @@ class WSMPushServerThread(threading.Thread):
                                             fs_resp_msg.text = ins_id
     
     
-                                        except Exception, ex:
+                                        except Exception as ex:
                                             logging.error( "Exception occurred while inserting or writing FS Response message:" + str(ex))
     
     
@@ -2261,7 +2268,7 @@ class WSMPushServerThread(threading.Thread):
                                             bs_req_msg.remove(bs_req_msg[0])
                                             bs_req_msg.text = ins_id
     
-                                        except Exception, ex:
+                                        except Exception as ex:
                                             logging.error("Exception occurred while inserting or writing BS Request message" + str(ex))
     
     
@@ -2295,7 +2302,7 @@ class WSMPushServerThread(threading.Thread):
                                             bs_resp_msg.remove(bs_resp_msg[0])
                                             bs_resp_msg.text = ins_id
     
-                                        except Exception, ex:
+                                        except Exception as ex:
                                             logging.error(" Exception occurred while inserting or writing BS Response message" + str(ex))
                                             pass
     
@@ -2348,7 +2355,7 @@ class WSMPushServerThread(threading.Thread):
                                             event_text = event_text + '%s=%s ' % (el_tag + "_" + eel_tag, eel_text)
     
                                     if len(eel.attrib) > 0:
-                                        for el_a, el_a_v in eel.attrib.items():
+                                        for el_a, el_a_v in list(eel.attrib.items()):
                                             el_a_v = el_a_v.replace("\n", "")
                                             el_a_v_ns = el_a_v.find("}")
                                             if el_a_v_ns > 0:
@@ -2378,7 +2385,7 @@ class WSMPushServerThread(threading.Thread):
     
     
                                 if len(el.attrib) > 0:
-                                    for el_a, el_a_v in el.attrib.items():
+                                    for el_a, el_a_v in list(el.attrib.items()):
                                         el_a_v = el_a_v.replace("\n", "")
                                         el_a_v_ns = el_a_v.find("}")
                                         if el_a_v_ns > 0:
@@ -2397,7 +2404,7 @@ class WSMPushServerThread(threading.Thread):
     
                     return True
     
-            except Exception, ex:
+            except Exception as ex:
                 logging.error("Exception occurred in WSM Pull thread! Exception:" + str(ex))
     
             return False
@@ -2414,7 +2421,7 @@ class WSMPushServerThread(threading.Thread):
             logging.debug("******** WS_M Logging event:" + str(splunk_event))
 
         def print_xml_single_instance_mode(self, host, event):
-            print "<stream><event><data>%s</data><host>%s</host></event></stream>" % (cgi.escape(event), host)
+            print("<stream><event><data>%s</data><host>%s</host></event></stream>" % (cgi.escape(event), host))
 
 
         
@@ -2437,7 +2444,7 @@ class WSMPushServerThread(threading.Thread):
 
                 self.process_wsm_events(push_req)
 
-            except Exception, ex:
+            except Exception as ex:
                 logging.error("******** Exception occurred in WSM Push thread! Exception:" + str(ex))
 
 
@@ -2590,7 +2597,7 @@ class WSMPushServerThread(threading.Thread):
                 else:
                     logging.error("******** Error while doing push subscription.  No EnumerationContext?? Response: %s" % str(r.content))
 
-        except Exception, ex:
+        except Exception as ex:
             logging.error("******** Exception while doing push subscription.  Exception: %s" % str(ex))
 
         return False
@@ -2643,7 +2650,7 @@ class WSMPushServerThread(threading.Thread):
                 else:
                     logging.error("******** Error while doing pull subscription.  No EnumerationContext?? Response: %s" % str(r.content))
 
-        except Exception, ex:
+        except Exception as ex:
             logging.error("******** Exception while doing pull subscription.  Exception: %s" % str(ex))
 
         return False
@@ -2686,7 +2693,7 @@ class WSMPushServerThread(threading.Thread):
             else:
                 logging.debug("******** Unsubscribed for domain: %s " % (domain))
                 return True
-        except Exception, ex:
+        except Exception as ex:
             logging.error("******** Exception while doing pull subscription.  Exception: %s" % str(ex))
 
         return False
@@ -2703,7 +2710,7 @@ class WSMPushServerThread(threading.Thread):
         self.print_xml_single_instance_mode(self.device_name, splunk_event)
 
     def print_xml_single_instance_mode(self, host, event):
-        print "<stream><event><data>%s</data><host>%s</host></event></stream>" % (cgi.escape(event), host)
+        print("<stream><event><data>%s</data><host>%s</host></event></stream>" % (cgi.escape(event), host))
 
 #     def __enter__(self):
 #         return self
@@ -2723,7 +2730,7 @@ class WSMPushServerThread(threading.Thread):
         cherrypy.engine.exit()
         for domain in self.domain_list:
             enumeration_context = ""
-            if self.domain_sub_dict.has_key(domain):
+            if domain in self.domain_sub_dict:
                 enumeration_context = self.domain_sub_dict[domain]
                 logging.debug("******** in dellete.  Unsubscribing..")
                 self.unsubscribe_push_subscription(domain, self.enumeration_context)
@@ -2764,7 +2771,7 @@ class WSMPushServerThread(threading.Thread):
                     
                     for domain in self.domain_list:
                         enumeration_context = ""
-                        if self.domain_sub_dict.has_key(domain):
+                        if domain in self.domain_sub_dict:
                             enumeration_context = self.domain_sub_dict[domain]
                             self.unsubscribe_push_subscription(domain, enumeration_context)
                     try:
@@ -2781,7 +2788,7 @@ class WSMPushServerThread(threading.Thread):
                     logging.debug("******** Over 480 seconds.  Renewing.")
                     for domain in self.domain_list:
                         enumeration_context = ""
-                        if self.domain_sub_dict.has_key(domain):
+                        if domain in self.domain_sub_dict:
                             enumeration_context = self.domain_sub_dict[domain]
                         if enumeration_context == "":
                             logging.error("******** NO Domain subscription found to renew? Domain:" + domain)
@@ -2815,7 +2822,7 @@ class WSMPushServerThread(threading.Thread):
                             delete_collection = "%s.%s" % (delete_date.strftime("%Y%m%d"), self.domain)
                             try:
                                 self.wsm_msg_payloads_mongodb_db.drop_collection(delete_collection)
-                            except Exception, ex:
+                            except Exception as ex:
                                 logging.error("Exception occurred while deleting collection.  Collection: %s Exception: %s" % (delete_collection, str(ex)))
 
                         #logging.debug("WSM pull in run() - Date changed. DB changed OK.")
@@ -2825,10 +2832,10 @@ class WSMPushServerThread(threading.Thread):
                             self.current_folder = os.path.join(self.wsm_msg_payloads_folder, self.current_date)
                             os.makedirs(os.path.join(self.current_folder, self.domain))
                             wsmp.update_current_folder(self.current_folder)
-                        except Exception, ex:
+                        except Exception as ex:
                             logging.error("Exception occurred while create new folder. Exception: %s" % str(ex))
 
-            except Exception, ex:
+            except Exception as ex:
                 logging.error("******** Exception occurred in WS-M Push thread.  Stopping. Exception:" + str(ex))
                 done = True
                 try:
@@ -2841,16 +2848,16 @@ class WSMPushServerThread(threading.Thread):
 
 # prints validation error data to be consumed by Splunk
 def print_validation_error(s):
-    print "<error><message>%s</message></error>" % xml.sax.saxutils.escape(s)
+    print("<error><message>%s</message></error>" % xml.sax.saxutils.escape(s))
 
 def usage():
-    print "usage: %s [--scheme|--validate-arguments]"
+    print("usage: %s [--scheme|--validate-arguments]")
     logging.error("Incorrect Program Usage")
     sys.exit(2)
 
 def do_scheme():
     logging.debug("MQINPUT: DO scheme..")
-    print SCHEME
+    print(SCHEME)
 
 #read XML configuration passed from splunkd, need to refactor to support single instance mode
 def get_input_config():
@@ -2889,12 +2896,12 @@ def get_input_config():
             config["checkpoint_dir"] = checkpnt_node.firstChild.data
 
         if not config:
-            raise Exception, "Invalid configuration received from Splunk."
+            raise Exception("Invalid configuration received from Splunk.")
 
 
     except: # catch *all* exceptions
         e = sys.exc_info()[1]
-        raise Exception, "Error getting Splunk configuration via STDIN: %s" % str(e)
+        raise Exception("Error getting Splunk configuration via STDIN: %s" % str(e))
 
     return config
 

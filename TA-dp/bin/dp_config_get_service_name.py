@@ -13,12 +13,12 @@ implied.
 
 '''
 import splunk.Intersplunk
-import splunklib.client 
+import splunklib.client
 import splunklib.results
 import sys
 from collections import OrderedDict
 
-index_name="esb_dp_config"             
+index_name="esb_dp_config"
 
 """
 
@@ -29,9 +29,9 @@ index_name="esb_dp_config"
 if isgetinfo:
     splunk.Intersplunk.outputInfo(True, False, False, False, None, False)
 
-# valid_parms = ["text", "element_value", "element_type", "object_type", "domain", "device", "follow_dependencies", "output_dependency_tree", "only_show_top_levels"]
-# if len(sys.argv) > len(valid_parms):
-#     splunk.Intersplunk.parseError("Too many arguments provided.")
+#valid_parms = ["recurse"]
+#if len(sys.argv) > len(valid_parms):
+#    splunk.Intersplunk.parseError("Too many arguments provided.")
 
 # i = 1
 # parm_dict = {}
@@ -58,7 +58,7 @@ if isgetinfo:
 #         if arg.count("=") > 1 or arg.count("=") <= 0:
 #             splunk.Intersplunk.parseError("Invalid argument. Valid options are text=<text>, element_value=<value>, element_type=<element_type>, object_type=<object_type>, domain, device, follow_dependencies, output_dependency_tree.")
 
-#     i = i + 1    
+#     i = i + 1
 
 messages = {}
 settings = {}
@@ -91,7 +91,7 @@ try:
         sys.stderr.write("got result!")
         if res.has_key("device"):
             device = res["device"]
-        
+
         if res.has_key("domain"):
             domain = res["domain"]
 
@@ -103,25 +103,31 @@ try:
             else:
                 if res.has_key("name"):
                     object_name = res["name"]
-        
+
         service_name = ""
         service_type = ""
         if service_name_dict.has_key((device,domain,object_name)):
 
             (service_type, service_name) = service_name_dict[(device,domain,object_name)]
         else:
-            query = """search earliest=-30d index=esb_dp_config %s device=%s sourcetype=_json domain=%s (type=MultiProtocolGateway OR type=WSGateway OR type=XMLFirewallService OR type=WebAppFW OR type=WSEndpointRewritePolicy)
-|spath | eval type=if(type="WSEndpointRewritePolicy", "WSGateway", type)
+
+#            query = """search earliest=-30d index=esb_dp_config %s device=%s sourcetype=_json domain=%s (type=MultiProtocolGateway OR type=WSGateway OR type=XMLFirewallService OR type=WebAppFW OR type=WSEndpointRewritePolicy)
+#|spath | eval type=if(type="WSEndpointRewritePolicy", "WSGateway", type)
+#""" % (object_name, device, domain)
+
+            query = """search earliest=-30d index=esb_dp_config name=%s device=%s sourcetype=_json domain=%s
+| dpconfig follow_dependencies=true
+|  search  (type=MultiProtocolGateway OR type=WSGateway OR type=XMLFirewallService OR type=WebAppFW)
 """ % (object_name, device, domain)
+            sys.stderr.write("query:{}".format(str(query)))
             kwargs_oneshot = { "count": 0 }
             config_search_response = service.jobs.oneshot(query, **kwargs_oneshot)
             config_resps = splunklib.results.ResultsReader(config_search_response)
-
-            
+            sys.stderr.write("config_resps:{}".format(str(config_resps)))
             if config_resps is not None:
                 for config_resp in config_resps:
                     if config_resp.has_key("name"):
-                        res["configrespsname"] =  "yes" 
+                        res["configrespsname"] =  "yes"
                         #service_name = service_name + " " + config_resp["name"]
                         service_name = str(config_resp["name"])
                     if config_resp.has_key("type"):
@@ -134,7 +140,7 @@ try:
             service_name = service_name.strip()
             service_type = service_type.strip()
             service_name_dict[(device,domain,object_name)] = (service_type, service_name)
-     
+
         res["service_name"] = service_name
         res["service_type"] = service_type
 

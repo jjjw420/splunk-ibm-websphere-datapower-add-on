@@ -1,4 +1,4 @@
-[dpinput://<name>]
+[dpstatsinput://<name>]
 
 *Datapower Device Name
 device_name= <value>
@@ -6,23 +6,18 @@ device_name= <value>
 *IP or hostname of the device
 device_host= <value>
 
-*The SOMA port on the device.  Defaults to 5550
-soma_port= <value>
+*The REST port on the device.  Defaults to 5550
+rest_port= <value>
 
 *The user to use when querying the device.
-soma_user= <value>
+rest_user= <value>
 
 *The password for the user.
-soma_user_password= <value>
+rest_user_password= <value>
 
 *How often to run the Datapower Input script
 dpinput_interval= <value>
 
-*enable statistics
-enable_stats= <value>
-
-*enable statistics in domains
-enable_stats_domains= <value>
 
 *cpu usage interval
 cpu_usage_int = <value>
@@ -47,6 +42,12 @@ network_int = <value>
 
 *system usage interval
 system_usage_int = <value>
+
+*enable statistics
+enable_stats= <value>
+
+*enable statistics in domains
+enable_stats_domains= <value>
 
 
 *capture active user statistics
@@ -127,103 +128,6 @@ web_app_fw_int= <value>
 *Capture WSM agent and publisher statistics.
 wsm_stats= <value>
 wsm_stats_int= <value>
-
-*Use WS-M to capture transactions
-use_wsm= <value>
-
-*Enable the WS-M agents.
-enable_wsm= <value>
-
-*Use WS-M in the following domains.  comma separated.
-wsm_domains= <value>
-
-*Use WS-M transaction time as event time
-use_wsm_transaction_time = <value>
-
-*WS-M maximum record size.
-wsm_max_rec_size= <value>
-
-*WS-M maximum memory usage.
-wsm_max_mem= <value>
-
-*WS-M capture mode.
-wsm_capture_mode= <value>
-
-*WS-M buffering mode.
-wsm_buf_mode= <value>
-
-*WS-M mediation enforcement metrics.
-wsm_med_enf_metrics= <value>
-
-*WS-M pull subscription
-wsm_pull= <value>
-
-*WS-M Pull interval
-wsm_pull_interval= <value>
-
-*WS-M Pull maximum SOAP Envelope size
-wsm_pull_max_soap_env_size= <value>
-
-*WS-M Pull maximum number of elements
-wsm_pull_max_elements= <value>
-
-*Use the custom splunk_dpinput wsm formatter
-wsm_pull_use_custom_formatter= <value>
-
-
-
-
-*WS-M Push subscription
-wsm_push= <value>
-
-
-*WS-M push host
-wsm_push_server_host= <value>
-
-*WS-M push port
-wsm_push_server_port= <value>
-
-*WS-M server thread per domain
-wsm_push_server_thread_per_domain= <value>
-
-
-*WS-M push subscription
-wsm_push_max_elements= <value>
-
-*Write WS-M payloads to disk or index in splunk
-wsm_msg_payloads_to_disk= <value>
-
-*Write WS-M payloads to disk or index in splunk
-wsm_msg_payloads_folder= <value>
-
-*Write WS-M message payloads to a Mongo database in order to save on file-system inodes
-wsm_msg_payloads_use_mongodb= <value>
-
-*MongoDB database name
-wsm_msg_payloads_mongodb_db_name= <value>
-
-*MongoDB database host
-wsm_msg_payloads_mongodb_host= <value>
-
-*MongoDB database port
-wsm_msg_payloads_mongodb_port= <value>
-
-
-*MongoDB database use auth
-wsm_msg_payloads_mongodb_use_auth= <value>
-
-*MongoDB database user
-wsm_msg_payloads_mongodb_user= <value>
-
-*MongoDB database password
-wsm_msg_payloads_mongodb_password= <value>
-
-
-*MongoDB database retention
-wsm_msg_payloads_mongodb_retention= <value>
-*MongoDB database retention period
-wsm_msg_payloads_mongodb_retention_period= <value>
-
 
 
 [dpwsminput://<name>]
@@ -334,6 +238,27 @@ wsm_msg_payloads_mongodb_password= <value>
 wsm_msg_payloads_mongodb_retention= <value>
 *MongoDB database retention period
 wsm_msg_payloads_mongodb_retention_period= <value>
+
+[dpconfiginput://<name>]
+
+*Datapower Device Name
+device_name= <value>
+
+*IP or hostname of the device
+device_host= <value>
+
+*The REST port on the device.  Defaults to 5550
+rest_port= <value>
+
+*The user to use when querying the device.
+rest_user= <value>
+
+*The password for the user.
+rest_user_password= <value>
+
+*The password for the user.
+clear_index= <value>
+
 
 
 

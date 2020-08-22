@@ -1,6 +1,8 @@
 #!/opt/splunk/bin/python
 '''
 IBM Websphere Datapower Modular Input for Splunk
+
+Scripted input for datapower exports.
 Hannes Wagener - 2016
 
 
@@ -102,11 +104,11 @@ if __name__ == '__main__':
             obj["type"] = el.tag
 
 
-            if len(el.attrib.keys()) > 0:
+            if len(list(el.attrib.keys())) > 0:
                 obj["attrib"] = el.attrib
-                if el.attrib.has_key("name"):
+                if "name" in el.attrib:
                     obj["name"] = el.attrib["name"]
-                if el.attrib.has_key("class"):
+                if "class" in el.attrib:
                     obj["class"] = el.attrib["class"]
 
             if len(el) > 0:
@@ -212,8 +214,9 @@ if __name__ == '__main__':
             #sys.stderr.write("Deleting input:{} \n".format(str(fle)))    
             os.remove(fle)
 
-    except Exception, ex:
+    except Exception as ex:
         #print "Exception occurred. Exception:{}".format(str(ex))
         sys.stderr.write("Exception occurred. Exception:{} \n".format(str(ex)))
 
 
+    
