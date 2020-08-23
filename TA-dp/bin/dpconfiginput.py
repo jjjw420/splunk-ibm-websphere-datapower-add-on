@@ -132,7 +132,7 @@ class DPConfigInput(splunklib.modularinput.Script):
             return None
         domain_list = []
 
-        logging.debug("content: <" + r.content + ">")
+        logging.debug("content: <" + r.content.decode("utf-8") + ">")
         
         domain_status_resp = json.loads(r.content)
         logging.debug("after json:" + str(domain_status_resp))
@@ -215,7 +215,7 @@ class DPConfigInput(splunklib.modularinput.Script):
                             continue
 
                     logging.debug("before get_dp_config_type()")
-                    rest_uri = c_uri["href"].encode("ascii")
+                    rest_uri = c_uri["href"]
                     rest_uri = rest_uri.format(domain=domain)
                     logging.debug("after rest_uri format. rest_uri:" + rest_uri)
                     
@@ -245,12 +245,12 @@ class DPConfigInput(splunklib.modularinput.Script):
                                     del(c_type_config["_links"])
                                     
                                 new_obj[c_type] = c_type_config
-                                logging.debug("list cinfig_type: " + str(config_type))
+                                logging.debug("list config_type: " + str(config_type))
                                 logging.debug("list c_type: " + str(c_type))
                                 logging.debug("list config_type[c_type]:" + str(config_type[c_type]))
 
                                 new_obj_str = json.dumps(new_obj)
-                                logging.error("event text:" + new_obj_str)
+                                logging.debug("event text:" + new_obj_str)
                                 event = splunklib.modularinput.Event()
                                 event.stanza = input_name
                                 event.data = new_obj_str
@@ -275,7 +275,7 @@ class DPConfigInput(splunklib.modularinput.Script):
                             new_obj[c_type] = config_type[c_type]           
 
                             new_obj_str = json.dumps(new_obj)
-                            logging.error("event text:" + new_obj_str)
+                            logging.debug("event text:" + new_obj_str)
                             event = splunklib.modularinput.Event()
                             event.stanza = input_name
                             event.data = new_obj_str
@@ -293,7 +293,7 @@ class DPConfigInput(splunklib.modularinput.Script):
         # and waits for XML on stdout describing events.
         logging.debug(str(inputs))
         logging.debug(str(inputs.inputs ))
-        for input_name, input_item in inputs.inputs.iteritems():
+        for input_name, input_item in inputs.inputs.items():
             device_name = input_item["device_name"]
             device_host = input_item["device_host"]
 

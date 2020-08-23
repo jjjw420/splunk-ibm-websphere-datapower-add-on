@@ -513,7 +513,7 @@ class DPStatsInput(splunklib.modularinput.Script):
                             wsg_n = gw["WSGateway"]["value"]
 
                     if port_n is not None and url_n is not None and wsg_n is not None:
-                        ws_op_dict[(port_n.text.strip(), url_n.text.strip())] = wsg_n.text
+                        ws_op_dict[(port_n, url_n.strip())] = wsg_n.strip
                     else:
                         logging.debug("WSOp status no Port, url or wsgateway found???")
             else:
@@ -653,7 +653,7 @@ class DPStatsInput(splunklib.modularinput.Script):
             threading.Thread.__init__(self)
 
             logging.debug("In _init__ for REST Polling Thread %s for input %s." % (thread_id, input_name))
-
+            logging.debug("In _init__ for REST Polling Thread %s input %s." % (thread_id, str(input_item)))
             self.setName(thread_id)
             self.thread_id = thread_id
             self.input_name = input_name
@@ -672,7 +672,10 @@ class DPStatsInput(splunklib.modularinput.Script):
             self.network_int = float(input_item["network_int"])
             self.system_usage_int = float(input_item["system_usage_int"])
             self.enable_stats = int(input_item["enable_stats"])
-            self.enable_stats_domains = input_item["enable_stats_domains"]
+
+            if "enable_stats_domains" in input_item:
+                self.enable_stats_domains = input_item["enable_stats_domains"]
+
             self.only_eth_ints_with_ips = int(input_item["only_eth_ints_with_ips"])
 
             self.active_users = int(input_item["active_users"])
@@ -1031,7 +1034,7 @@ class DPStatsInput(splunklib.modularinput.Script):
         
         domain_wsm_op_dict = {}
         self.rest_mgmt_url = "https://{device_host}:{rest_port}{mgmt_uri}"
-        #logging.debug("... DPINPUT: do_run() ...")
+        logging.debug("... DPINPUT: do_run() ...")
         
         input_name =  input_name
         device_name = input_item["device_name"]
@@ -1043,7 +1046,7 @@ class DPStatsInput(splunklib.modularinput.Script):
         enable_stats_domains = None
         if "enable_stats_domains" in input_item:
             enable_stats_domains = input_item["enable_stats_domains"]
-        only_eth_ints_with_ips = input_item["only_eth_ints_with_ips"]
+        only_eth_ints_with_ips = int(input_item["only_eth_ints_with_ips"])
             
         # wsm_msg_payloads_mongodb_client = None
 
@@ -1062,10 +1065,6 @@ class DPStatsInput(splunklib.modularinput.Script):
         if enable_stats_domains is not None:
             enable_stats_domain_list = list(map(str,enable_stats_domains.split(",")))
             enable_stats_domain_list = [x.strip(' ') for x in enable_stats_domain_list]
-
-        # if wsm_domains is not None:
-        #     wsm_domain_list = list(map(str,wsm_domains.split(",")))
-        #     wsm_domain_list = [x.strip(' ') for x in wsm_domain_list]
 
         try:
             device_comms_ok = False
@@ -1138,7 +1137,8 @@ class DPStatsInput(splunklib.modularinput.Script):
         # and waits for XML on stdout describing events.
         logging.debug(str(inputs))
         logging.debug(str(inputs.inputs ))
-        for input_name, input_item in inputs.inputs.iteritems():
+
+        for input_name, input_item in inputs.inputs.items():
             self.do_run(input_name, input_item, ew)
 
 if __name__ == "__main__":
